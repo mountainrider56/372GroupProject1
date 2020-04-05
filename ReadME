@@ -1,0 +1,81 @@
+Conceptual Class Diagram 
+# Draft without connections 
+# For diagrams should we use draw.io ? 
+
+Appliance
+-	brandName (string)
+-	Stock (int)
+-	Model (string) 
+-	Price (double)
+
+Customer
+-	Name (String)
+-	phoneNumber (String)
+-	CutsomerId (int)
+-	Method
+-	GenerateCustomerID
+
+Company 
++	TotalSales (Double)
++	Method PrintSales
++	Method PrintRepairPlans
++	Method ListBackORders
+
+Refrigerators extends Appliance 
+-	Capacity (int)
+
+Furnace extends Appliance 
+-	maxHeatOutput
+
+ClothWasher extends Appliance 
+-	repairPlan
+-	monthlyPayment
+
+ClothDryer extends Appliance
+-	repairPlan
+-	monthlyPayment
+
+KitchenRanges
+-	X
+
+Purchase
+
+BackOrder
+-	QueueOfCustomer
+-	DateOrdered
+
+Catalog
+-	ApplianceList? 
+-	InventoryList? 
+
+
+------------------------------------------
+
+Action Plan 4/4/2020
+
+Start Java Classes
+Start a GIT hub? 
+Upload basic classes before 4/8? 8:30pm next meeting
+
+Aayush, Aaron, 
+  Appliance Furnace Refrigerator 
+  Cloth Dryer
+  Cloth Washer
+
+Steven
+  Customer
+  BackOrder
+
+Jake
+  Catalog
+
+David
+  Company
+
+Save for later
+  Non-GUI (HELP)
+
+
+
+
+
