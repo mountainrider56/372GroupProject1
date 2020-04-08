@@ -7,18 +7,30 @@ Library/Driver
 - addCustomer(String name, String phone)
 - addModel
 
-Appliance
+UserInterface
+
+applianceList(similar to itemList)
+
+AutomatedTester
+
+Appliance (Similar to Book)
 -	brandName (string)
 -	Stock (int)
 -	Model (string) 
 -	Price (double)
 
-Customer
+Customer(similar to member)
 -	Name (String)
 -	phoneNumber (String)
 -	CutsomerId (int)
 -	Method
 -	GenerateCustomerID
+
+CustomerList(similar to MemberList)
+
+CustomerIdServer(similar to MemberIdServer)
+
+Backlog(similar to Hold)
 
 Company 
 +	TotalSales (Double)
@@ -43,7 +55,7 @@ ClothDryer extends Appliance
 KitchenRanges
 -	X
 
-Purchase
+Purchase(similar to transaction)
 
 BackOrder
 -	QueueOfCustomer
