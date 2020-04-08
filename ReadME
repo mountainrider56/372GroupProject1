@@ -2,6 +2,11 @@ Conceptual Class Diagram
 # Draft without connections 
 # For diagrams should we use draw.io ? 
 
+Library/Driver
+- addInventory(String applianceType, int quantityAdded)
+- addCustomer(String name, String phone)
+- addModel
+
 Appliance
 -	brandName (string)
 -	Stock (int)
