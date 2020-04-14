@@ -106,3 +106,13 @@ public class Library implements Serializable {
 	public Customer searchCustomerList(String customerId) { //was searchMembership(_)
 		return customerList.search(customerId);
 	}
+
+	public boolean save() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Appliance addAppliance(Appliance[] appliances) {
+		// TODO Auto-generated method stub
+		return null;
+	}
