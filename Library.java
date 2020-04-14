@@ -1,8 +1,3 @@
-
-/**
- *  
- */
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,9 +9,17 @@ import java.util.Iterator;
 
 public class Library implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+	public static final int APPLIANCE_NOT_FOUND = 1;
+	public static final int APPLIANCE_NOT_ISSUED = 2;
+	public static final int APPLIANCE_HAS_BACKORDER = 3;
+	public static final int APPLIANCE_ISSUED = 4;
+	public static final int BACKORDER_PLACED = 5;
+	public static final int NO_BACKORDER_FOUND = 6;
+	public static final int OPERATION_COMPLETED = 7;
+	public static final int OPERATION_FAILED = 8;
+	public static final int NO_SUCH_CUSTOMER = 9;
 	private Catalog catalog;
-	private MemberList customerList;
+	private CustomerList memberList;
 	private static Library library;
 
 	/**
@@ -24,7 +27,8 @@ public class Library implements Serializable {
 	 * objects
 	 */
 	private Library() {
-		
+		catalog = Catalog.instance();
+		memberList = MemberList.instance();
 	}
 
 	/**
@@ -33,16 +37,34 @@ public class Library implements Serializable {
 	 * @return the singleton object
 	 */
 	public static Library instance() {
-
+		if (library == null) {
+			CustomerIdServer.instance(); // instantiate all singletons
+			return (library = new Library());
+		} else {
+			return library;
+		}
 	}
 
-
-	public Appliance addAppliance(_) {
-		
+	/**
+	 * Organizes the operations for adding a model
+	 *
+	 */
+	public Appliance addModel(____) {
+		Appliance appliance = new Appliance(____);
+		if (catalog.insertModel(appliance)) {
+			return (appliance);
+		}
+		return null;
 	}
 
-
-	public Member addCustomer(String name, String phone) {
+	/**
+	 * Organizes the operations for adding a customer
+	 * 
+	 * @param name    member name
+	 * @param phone   customer phone
+	 * @return the Customer object created
+	 */
+	public Customer addCustomer(String name, String phone) {
 		Customer customer = new Customer(name, phone);
 		if (customerList.insertCustomer(customer)) {
 			return (customer);
@@ -50,76 +72,37 @@ public class Library implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Organizes the placing of a backorder
+	 * 
+	 * @param customerId customer's id
+	 * @param applianceId   appliance's id
+	 * @return indication on the outcome
+	 */
+	public int placeBackorder(String customerId, String applianceId) {
+		Appliance appliance = catalog.search(applianceId);
+		if (appliance == null) {
+			return APPLIANCE_NOT_FOUND;
+		}
+		if (appliance.getCustomer() == null) { // this was getBorrower
+			return APPLIANCE_NOT_ISSUED;
+		}
+		Customer customer = customerList.search(customerId);
+		if (customer == null) {
+			return NO_SUCH_CUSTOMER;
+		}
+		Backorder backorder = new Backorder(customer, appliance);
+		appliance.placeBackorder(backorder);
+		customer.placeBackorder(backorder);
+		return BACKORDER_PLACED;
+	}
 
-
-
-	public Customer searchCustomer(String customerId) {
+	/**
+	 * Searches for a given customer
+	 * 
+	 * @param customerId id of the customer
+	 * @return true iff the customer is in the customer list collection
+	 */
+	public Customer searchCustomerList(String customerId) { //was searchMembership(_)
 		return customerList.search(customerId);
 	}
-
-
-	public Customer processBacklog(String _) {
-
-	}
-
-
-	public int removeBacklog(String _, String _) {
-		
-	}
-
-	
-
-	
-	public Iterator getPurchase(_) {
-		
-	}
-
-	/**
-	 * Retrieves a deserialized version of the library from disk
-	 * 
-	 * @return a Library object
-	 */
-	public static Library retrieve() {
-		try {
-			FileInputStream file = new FileInputStream("LibraryData");
-			ObjectInputStream input = new ObjectInputStream(file);
-			library = (Library) input.readObject();
-			MemberIdServer.retrieve(input);
-			return library;
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			return null;
-		} catch (ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
-			return null;
-		}
-	}
-
-	/**
-	 * Serializes the Library object
-	 * 
-	 * @return true iff the data could be saved
-	 */
-	public static boolean save() {
-		try {
-			FileOutputStream file = new FileOutputStream("LibraryData");
-			ObjectOutputStream output = new ObjectOutputStream(file);
-			output.writeObject(library);
-			output.writeObject(CustomerIdServer.instance());
-			file.close();
-			return true;
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
-	 * String form of the library
-	 * 
-	 */
-	@Override
-	public String toString() {
-		return catalog + "\n" + customerList;
-	}
-}
