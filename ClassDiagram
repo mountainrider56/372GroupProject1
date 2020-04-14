@@ -1,0 +1,10 @@
+Draft 01
+
+Appliance
+  # brandName : String
+  # model : String
+  # stock : int 
+  # price : double
+  ---------------------
+  
+  
