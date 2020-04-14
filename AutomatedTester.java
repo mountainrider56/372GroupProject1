@@ -17,6 +17,7 @@ public class AutomatedTester {
 	public AutomatedTester(Library library) {
 		this.library = library;
 		test();
+		addAppliances();
 	}
 
 	/**
@@ -34,5 +35,10 @@ public class AutomatedTester {
 			assert members[count].getAddress().equals(addresses[count]);
 			assert members[count].getPhone().equals(phones[count]);
 		}
+	}
+	
+	// Method populates the library with starting appliance data. 
+	public void addAppliances(){
+		String[] brand = { "Sam", "Jane", "Belle","Frank","Joe","John","Jill","Francis","Roma" };
 	}
 }
