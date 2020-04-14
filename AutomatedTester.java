@@ -39,6 +39,8 @@ public class AutomatedTester {
 	
 	// Method populates the library with starting appliance data. 
 	public void addAppliances(){
-		String[] brand = { "Sam", "Jane", "Belle","Frank","Joe","John","Jill","Francis","Roma" };
+		String[] brandName = { "Samsung", "MayTag", "KitchenAide","LG" };
+		
+	}
 	}
 }
