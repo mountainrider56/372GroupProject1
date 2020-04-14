@@ -19,7 +19,7 @@ public class Library implements Serializable {
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_CUSTOMER = 9;
 	private Catalog catalog;
-	private CustomerList memberList;
+	private CustomerList customerList;
 	private static Library library;
 
 	/**
@@ -28,7 +28,7 @@ public class Library implements Serializable {
 	 */
 	private Library() {
 		catalog = Catalog.instance();
-		memberList = MemberList.instance();
+		customerList = CustomerList.instance();
 	}
 
 	/**
