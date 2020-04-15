@@ -187,10 +187,9 @@ public class UserInterface {
 	 */
 	public void addCustomer() {
 		String name = getToken("Enter customer name");
-		String address = getToken("Enter address");
 		String phone = getToken("Enter phone");
 		Customer result;
-		result = library.addCustomer(name, address, phone);
+		result = library.addCustomer(name, phone);
 		if (result == null) {
 			System.out.println("Could not add customer");
 		}
@@ -213,7 +212,6 @@ public class UserInterface {
 					+ "5. Refrigerators\\n"
 					+ "6. Furnances");
 
-			String author = getToken("Enter author");
 			
 			switch (typeOfAppliance) {
 			
@@ -230,13 +228,13 @@ public class UserInterface {
 				
 			// refrigerators
 			case "5" : 
-				String capacity = getToken("Enter monthly repair plan cost");
+				String capacity = getToken("Enter capacity");
 				result = library.addModel(typeOfAppliance, null, capacity , null);
 				break;
 			
 			// furnaces 
 			case "6" : 
-				String heatOutput = getToken("Enter monthly repair plan cost");
+				String heatOutput = getToken("Enter heat Output");
 				result = library.addModel(typeOfAppliance, null, null , heatOutput);
 				break;
 			
