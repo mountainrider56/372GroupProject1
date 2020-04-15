@@ -1,0 +1,58 @@
+UserInterface
+
+ADD_MEMBER - ADD_CUSTOMER
+ADD_BOOKS - ADD_APPLIANCE_MODEL
+ISSUE_BOOKS - ISSUE_ORDER
+.
+.
+removing 
+  RETURN_BOOKS
+  RENEW_BOOKS
+  REMOVE_BOOKS
+    need implementation later 
+.
+.
+PLACE_HOLD - PLACE_BACKORDER
+REMOVE_HOLD - REMOVE_BACKORDER
+PROCESS_HOLD - PROCESS_BACKORDER
+GET_TRANSACTIONS
+SAVE
+HELP
+
+Other words changed
+  words
+    member - customer 
+  class
+    Book - Appliance 
+    Member - Customer 
+  
+help() was changed. 
+
+addMember - addCustomer
+  - address was removed 
+
+addBooks - addModel 
+
+addInventory 
+  * need to write this method 
+
+issueBooks - issueOrders 
+
+placeHold - placeBackOrder
+  memberID - customerID
+  bookID - applianceID
+  duration is removed 
+
+removeHold - removeBackOrder
+  memberID - customerID
+  bookID - applianceID
+
+processHolds - processBackOrder
+  bookID - applianceID
+
+getTransaction
+  memberID - customerID
+  * needs to be modified 
+
+process() 
+  * needs to be modified. 
