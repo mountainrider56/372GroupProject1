@@ -32,6 +32,8 @@ public class Appliance implements Serializable {
 	 * @param modelName modelName name
 	 * @param id     appliance id
 	 */
+	
+	//                                                      Remove ID
 	public Appliance(String brandName, String modelName, String id) {
 		this.brandName = brandName;
 		this.modelName = modelName;
