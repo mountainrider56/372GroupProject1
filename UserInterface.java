@@ -35,9 +35,10 @@ public class UserInterface {
 	private static final int PROCESS_BACKORDER = 9;
 	private static final int GET_TRANSACTIONS = 10;
 	private static final int SAVE = 11;
-	private static final int HELP = 15;
+	private static final int HELP = 16;
 	private static final int LIST_CUSTOMERS = 13;
 	private static final int LIST_REPAIR_PLANS = 14;
+	private static final int LIST_APPILANCES = 15;
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.
 	 * Otherwise, it gets a singleton Library object.
@@ -181,6 +182,7 @@ public class UserInterface {
 		System.out.println(HELP + " for help");
 		System.out.println(LIST_CUSTOMERS + " to list customers");
 		System.out.println(LIST_REPAIR_PLANS + " to list all users in a repair plan");
+		System.out.println(LIST_APPILANCES + " to list appliances");
 	}
 
 	/**
@@ -460,8 +462,17 @@ public class UserInterface {
 			case LIST_REPAIR_PLANS:
 				list_Repair_Plans();
 				break;
+				
+			case LIST_APPILANCES:
+				list_appliances();
+				break;
 			}
 		}
+	}
+
+	private void list_appliances() {
+		// TODO Auto-generated method stub
+		System.out.println("Appliance List\n-----------\n");
 	}
 
 	private void list_Repair_Plans() {
