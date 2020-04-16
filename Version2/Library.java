@@ -60,21 +60,6 @@ public class Library implements Serializable {
 	 */
 	
 	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
-								String monthlyRepairPlanCost) {
-		
-		
-		
-		
-	}
-	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
-								String capacity) {
-		
-		
-		
-		
-	}
-	
-	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
 								String monthlyRepairPlanCost, String capacity, String heatOutput) {
 		
 		
