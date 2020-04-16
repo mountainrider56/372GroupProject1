@@ -214,6 +214,7 @@ public class UserInterface {
 			
 			String brandName = getToken("Enter the brand Name"); 
 			String modelName = getToken("Enter the model Name"); 
+			String price = getToken("Enter the Price"); 
 
 			
 			switch (typeOfAppliance) {
@@ -221,24 +222,24 @@ public class UserInterface {
 			// washer and dryer
 			case "1" : case "2" : 
 				String monthlyRepairPlanCost = getToken("Enter monthly repair plan cost");
-				result = library.addModel(typeOfAppliance, brandName, modelName, monthlyRepairPlanCost, "Null" , "Null");
+				result = library.addModel(typeOfAppliance, brandName, modelName, price,  monthlyRepairPlanCost, "Null" , "Null");
 				break;
 			
 			// kitchen range and dish washers
 			case "3" : case "4" :  
-				result = library.addModel(typeOfAppliance,brandName, modelName, "Null" , "Null" , "Null");
+				result = library.addModel(typeOfAppliance,brandName, modelName, price, "Null" , "Null" , "Null");
 				break;
 				
 			// refrigerators
 			case "5" : 
 				String capacity = getToken("Enter capacity");
-				result = library.addModel(typeOfAppliance,brandName, modelName, "Null", capacity , "Null");
+				result = library.addModel(typeOfAppliance,brandName, modelName, price, "Null", capacity , "Null");
 				break;
 			
 			// furnaces 
 			case "6" : 
 				String heatOutput = getToken("Enter heat Output");
-				result = library.addModel(typeOfAppliance, brandName, modelName,"Null", "Null" , heatOutput);
+				result = library.addModel(typeOfAppliance, brandName, modelName, price, "Null", "Null" , heatOutput);
 				break;
 			
 			default:
