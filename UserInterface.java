@@ -1,7 +1,7 @@
 
 /**
  * 
- * @author 
+ * @modelName 
  *   
  */
 import java.io.BufferedReader;
@@ -28,15 +28,16 @@ public class UserInterface {
 	private static final int EXIT = 0;
 	private static final int ADD_CUSTOMER = 1;
 	private static final int ADD_APPLIANCE_MODEL = 2;
-	private static final int ISSUE_ORDER = 3;
+	private static final int PURCHASE_ORDER = 3;
 
 	private static final int PLACE_BACKORDER = 7;
 	private static final int REMOVE_BACKORDER = 8;
 	private static final int PROCESS_BACKORDER = 9;
 	private static final int GET_TRANSACTIONS = 10;
 	private static final int SAVE = 11;
-	private static final int HELP = 12;
-
+	private static final int HELP = 15;
+	private static final int LIST_CUSTOMERS = 13;
+	private static final int LIST_REPAIR_PLANS = 14;
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.
 	 * Otherwise, it gets a singleton Library object.
@@ -166,11 +167,11 @@ public class UserInterface {
 	 * 
 	 */
 	public void help() {
-		System.out.println("Enter a number between 0 and 12 as explained below:");
+		System.out.println("Enter a number between 0 and 13 as explained below:");
 		System.out.println(EXIT + " to Exit\n");
 		System.out.println(ADD_CUSTOMER + " to add a Customer");
 		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
-		System.out.println(ISSUE_ORDER + " to  issue order to a  customer");
+		System.out.println(PURCHASE_ORDER + " to  purchase order to a  customer");
 
 		System.out.println(PLACE_BACKORDER + " to  place a backorder on an appliance");
 		System.out.println(REMOVE_BACKORDER + " to  remove a backorder on an appliance");
@@ -178,6 +179,8 @@ public class UserInterface {
 		System.out.println(GET_TRANSACTIONS + " to  print transactions");
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
+		System.out.println(LIST_CUSTOMERS + " to list customers");
+		System.out.println(LIST_REPAIR_PLANS + " to list all users in a repair plan");
 	}
 
 	/**
@@ -211,6 +214,10 @@ public class UserInterface {
 					+ "4. Dish Washers\\n"
 					+ "5. Refrigerators\\n"
 					+ "6. Furnances");
+			
+			String brandName = getToken("Enter the brand Name"); 
+			String modelName = getToken("Enter the model Name"); 
+			String price = getToken("Enter the Price"); 
 
 			
 			switch (typeOfAppliance) {
@@ -218,35 +225,35 @@ public class UserInterface {
 			// washer and dryer
 			case "1" : case "2" : 
 				String monthlyRepairPlanCost = getToken("Enter monthly repair plan cost");
-				result = library.addModel(typeOfAppliance, monthlyRepairPlanCost, null , null);
+				result = library.addModel(typeOfAppliance, brandName, modelName, price,  monthlyRepairPlanCost, "Null" , "Null");
 				break;
 			
 			// kitchen range and dish washers
 			case "3" : case "4" :  
-				result = library.addModel(typeOfAppliance, null , null , null);
+				result = library.addModel(typeOfAppliance,brandName, modelName, price, "Null" , "Null" , "Null");
 				break;
 				
 			// refrigerators
 			case "5" : 
 				String capacity = getToken("Enter capacity");
-				result = library.addModel(typeOfAppliance, null, capacity , null);
+				result = library.addModel(typeOfAppliance,brandName, modelName, price, "Null", capacity , "Null");
 				break;
 			
 			// furnaces 
 			case "6" : 
 				String heatOutput = getToken("Enter heat Output");
-				result = library.addModel(typeOfAppliance, null, null , heatOutput);
+				result = library.addModel(typeOfAppliance, brandName, modelName, price, "Null", "Null" , heatOutput);
 				break;
 			
 			default:
 				System.out.println("An error has occurred");
 			}
 			
-			if (result != null) {
-				System.out.println(result);
-			} else {
-				System.out.println("Model could not be added");
-			}
+//			if (result != null) {
+//				System.out.println(result);
+//			} else {
+//				System.out.println("Model could not be added");
+//			}
 		} while (yesOrNo("Add more Models?"));
 	}
 
@@ -255,20 +262,20 @@ public class UserInterface {
 	 * values and uses the appropriate Library method for issuing appliances.
 	 * 
 	 */
-	public void issueOrders() {
+	public void purchaseOrders() {
 		Appliance result;
 		String customerID = getToken("Enter customer id");
-		if (library.searchMembership(customerID) == null) {
+		if (library.searchCustomer(customerID) == null) {
 			System.out.println("No such customer");
 			return;
 		}
 		do {
 			String applianceID = getToken("Enter appliance id");
-			result = library.issueBook(customerID, applianceID);
+			result = library.purchaseAppliance(customerID, applianceID);
 			if (result != null) {
-				System.out.println(result.getTitle() + "   " + result.getDueDate());
+				System.out.println(result.getBrandName() + "   " + result.getModelName() + " " );
 			} else {
-				System.out.println("Appliance could not be issued");
+				System.out.println("Appliance could not be purchased");
 			}
 		} while (yesOrNo("Issue more appliances?"));
 	}
@@ -279,27 +286,27 @@ public class UserInterface {
 	
 
 	/**
-	 * Method to be called for placing a hold. Prompts the user for the appropriate
-	 * values and uses the appropriate Library method for placing a hold.
+	 * Method to be called for placing a backOrder. Prompts the user for the appropriate
+	 * values and uses the appropriate Library method for placing a backOrder.
 	 * 
 	 */
 	public void placeBackOrder() {
 		String customerID = getToken("Enter customer id");
 		String applianceID = getToken("Enter appliance id");
-		int duration = getNumber("Enter duration of hold");
+		int duration = getNumber("Enter duration of backOrder");
 		int result = library.placeBackOrder(customerID, applianceID, duration);
 		switch (result) {
-		case Library.BOOK_NOT_FOUND:
+		case Library.APPLIANCE_NOT_FOUND:
 			System.out.println("No such Appliance in Library");
 			break;
-		case Library.BOOK_NOT_ISSUED:
+		case Library.APPLIANCE_NOT_PURCHASED:
 			System.out.println(" Appliance is not checked out");
 			break;
-		case Library.NO_SUCH_MEMBER:
+		case Library.NO_SUCH_CUSTOMER:
 			System.out.println("Not a valid customer ID");
 			break;
-		case Library.HOLD_PLACED:
-			System.out.println("A hold has been placed");
+		case Library.BACKORDER_PLACED:
+			System.out.println("A backOrder has been placed");
 			break;
 		default:
 			System.out.println("An error has occurred");
@@ -307,9 +314,9 @@ public class UserInterface {
 	}
 
 	/**
-	 * Method to be called for removing a holds. Prompts the user for the
+	 * Method to be called for removing a backOrders. Prompts the user for the
 	 * appropriate values and uses the appropriate Library method for removing a
-	 * hold.
+	 * backOrder.
 	 * 
 	 */
 	public void removeBackOrder() {
@@ -317,14 +324,14 @@ public class UserInterface {
 		String applianceID = getToken("Enter appliance id");
 		int result = library.removeBackOrder(customerID, applianceID);
 		switch (result) {
-		case Library.BOOK_NOT_FOUND:
+		case Library.APPLIANCE_NOT_FOUND:
 			System.out.println("No such Appliance in Library");
 			break;
-		case Library.NO_SUCH_MEMBER:
+		case Library.NO_SUCH_CUSTOMER:
 			System.out.println("Not a valid customer ID");
 			break;
 		case Library.OPERATION_COMPLETED:
-			System.out.println("The hold has been removed");
+			System.out.println("The backOrder has been removed");
 			break;
 		default:
 			System.out.println("An error has occurred");
@@ -341,11 +348,11 @@ public class UserInterface {
 		Customer result;
 		do {
 			String applianceID = getToken("Enter appliance id");
-			result = library.processHold(applianceID);
+			result = library.processBackOrder(applianceID);
 			if (result != null) {
 				System.out.println(result);
 			} else {
-				System.out.println("No valid holds left");
+				System.out.println("No valid backOrders left");
 			}
 			if (!yesOrNo("Process more appliances?")) {
 				break;
@@ -368,7 +375,7 @@ public class UserInterface {
 		} else {
 			while (result.hasNext()) {
 				Transaction transaction = (Transaction) result.next();
-				System.out.println(transaction.getType() + "   " + transaction.getTitle() + "\n");
+				System.out.println(transaction.getType() + "   " + transaction.getBrandName() + "\n");
 			}
 			System.out.println("\n  There are no more transactions \n");
 		}
@@ -424,8 +431,8 @@ public class UserInterface {
 			case ADD_APPLIANCE_MODEL:
 				addModel();
 				break;
-			case ISSUE_ORDER:
-				issueOrders();
+			case PURCHASE_ORDER:
+				purchaseOrders();
 				break;
 
 			case PLACE_BACKORDER:
@@ -446,10 +453,28 @@ public class UserInterface {
 			case HELP:
 				help();
 				break;
+			
+			case LIST_CUSTOMERS:
+				list_Customers();
+				break;
+			case LIST_REPAIR_PLANS:
+				list_Repair_Plans();
+				break;
 			}
 		}
 	}
 
+	private void list_Repair_Plans() {
+		// TODO Auto-generated method stub
+		System.out.println("List of users in Repair Plans\n-----------\n");
+	}
+
+	private void list_Customers() {
+		// print out customers
+		System.out.println("Customer List\n-----------\n");
+		System.out.println(library.getCustomerList().toString());
+		
+	}
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 
