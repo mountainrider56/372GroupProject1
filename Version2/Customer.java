@@ -170,7 +170,7 @@ public class Customer implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String string = "Customer name " + name + " id " + id + "phone " + phone;
+		String string = "Customer name " + name + " id " + id + "\nphone " + phone;
 		string += " borrowed: [";
 		for (Iterator iterator = appliancesPurchased.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
@@ -185,7 +185,7 @@ public class Customer implements Serializable {
 		for (Iterator iterator = transactions.iterator(); iterator.hasNext();) {
 			string += (Transaction) iterator.next();
 		}
-		string += "]";
+		string += "]\n\n";
 		return string;
 	}
 

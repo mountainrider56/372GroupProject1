@@ -23,9 +23,10 @@ public class AutomatedTester {
 	 * Tests Customer creation.
 	 */
 	public void test() {
-		String[] names = { "n1", "n2", "n3" };
-		String[] phones = { "p1", "p2", "p3" };
-		Customer[] customers = new Customer[3];
+		String[] names = { "Sam", "Jane", "Belle","Frank","Joe","John","Jill","Francis","Roma" };
+		String[] phones = { "651-555-4444", "547-888-1558", "155-555-5555","651-222-4222","651-785-7508","651-758-5888",
+				  "594-112-2310","542-432-3333","651-888-0010"};
+		Customer[] customers = new Customer[9];
 		for (int count = 0; count < names.length; count++) {
 			customers[count] = library.addCustomer(names[count], phones[count]);
 			assert customers[count].getName().equals(names[count]);
