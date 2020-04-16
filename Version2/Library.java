@@ -58,11 +58,56 @@ public class Library implements Serializable {
 	 * @param id     appliance id
 	 * @return the Appliance object created
 	 */
-	public Appliance addModel( String typeOfAppliance, String brandName, String modelName,
+	
+	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
+								String monthlyRepairPlanCost) {
+		
+		
+		
+		
+	}
+	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
+								String capacity) {
+		
+		
+		
+		
+	}
+	
+	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
 								String monthlyRepairPlanCost, String capacity, String heatOutput) {
-		// this needs to change 
-		String createApplianceId = "xxx"; 
-		Appliance appliance = new Appliance(brandName, modelName, createApplianceId);
+		
+		
+		// washer and dryer
+		Switch(typeOfAppliance) {
+		case "1" : 
+			Washer washer = new Washer(brandName, modelName, price, monthlyRepairPlanCost);
+			break;
+		case "2" : 
+			Dryer dryer = new Dryer(brandName, modelName, price, monthlyRepairPlanCost);
+
+		// kitchen range and dish washers
+		case "3" : 
+			KitchenRange kitchenRange = new KitchenRange(brandName, modelName, price);
+			break;
+			
+		case "4" :  
+			DishWasher dishwasher = new DishWasher(brandName, modelName, price);
+			break;
+
+		// refrigerators
+		case "5" : 
+			Refrigerator refrigerator = new Refrigerator(brandName, modelName, price, capacity);
+			break;
+
+		// furnaces 
+		case "6" : 
+			Furnace furnace = new Furnace(brandName, modelName, price, heatOutput);
+			break;
+
+		default:
+			System.out.println("An error has occurred");
+		}
 		if (catalog.insertAppliance(appliance)) {
 			return (appliance);
 		}
