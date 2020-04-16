@@ -6,3 +6,11 @@ Todo List Priority #1
     - Withdraw from a Repair Plan (Business Process #6 )
     - Charge repair plan (Business Process #7 )
     - List all user with repair plan(could be implemented by different class) 
+    
+  - Finish Inventory 
+  - Finish Purchase 
+  - Write Test cases 
+  - List Appliances 
+  - Print Revenue 
+    - all sales and repair plans 
+  - List backorders  
