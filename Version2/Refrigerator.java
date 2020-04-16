@@ -6,7 +6,7 @@ public class Refrigerator extends Appliance implements Serializable {
   
   public Refrigerator(String brandName, String modelName, String price, String capacity){
     super(brandName, modelName, Double.parseDouble(price)); 
-    this.monthlyRepairPlanCost = Double.parseDouble(capacity); 
+    this.capacity = Double.parseDouble(capacity); 
  
   }
   

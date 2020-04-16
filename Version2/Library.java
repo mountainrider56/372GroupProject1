@@ -62,9 +62,7 @@ public class Library implements Serializable {
 	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
 								String monthlyRepairPlanCost, String capacity, String heatOutput) {
 		
-		
-		// washer and dryer
-		Switch(typeOfAppliance) {
+		switch(typeOfAppliance) {
 		case "1" : 
 			Washer washer = new Washer(brandName, modelName, price, monthlyRepairPlanCost);
 			break;
@@ -93,9 +91,11 @@ public class Library implements Serializable {
 		default:
 			System.out.println("An error has occurred");
 		}
-		if (catalog.insertAppliance(appliance)) {
-			return (appliance);
-		}
+		
+		// Not sure what this is doing, fix it later
+		//if (catalog.insertAppliance(appliance)) {
+			//return (appliance);
+		//}
 		return null;
 	}
 
