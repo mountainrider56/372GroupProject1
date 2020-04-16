@@ -18,7 +18,11 @@ public class ApplianceList implements Serializable {
     private List appliances = new LinkedList();
     private static ApplianceList applianceList;
 
-    /*
+    public static ApplianceList getApplianceList() {
+		return applianceList;
+	}
+
+	/*
      * Private constructor for singleton pattern
      * 
      */

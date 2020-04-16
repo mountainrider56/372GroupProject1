@@ -25,6 +25,14 @@ public class Library implements Serializable {
 	public static final int NO_SUCH_CUSTOMER = 9;
 	private Catalog catalog;
 	private CustomerList customerList;
+	public CustomerList getCustomerList() {
+		return customerList;
+	}
+
+	public void setCustomerList(CustomerList customerList) {
+		this.customerList = customerList;
+	}
+
 	private static Library library;
 
 	/**
@@ -333,5 +341,6 @@ public class Library implements Serializable {
 	@Override
 	public String toString() {
 		return catalog + "\n" + customerList;
+		
 	}
 }
