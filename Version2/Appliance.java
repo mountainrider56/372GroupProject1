@@ -20,6 +20,7 @@ public class Appliance implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String brandName;
 	private String modelName;
+	private String type;
 	private String id;
 	private int stock;
 	private Customer purchasedBy;
@@ -35,9 +36,10 @@ public class Appliance implements Serializable {
 	 */
 	
 	//                                                      Remove ID
-	public Appliance(String brandName, String modelName, int stock) {
+	public Appliance(String brandName, String modelName, String type, int stock) {
 		this.brandName = brandName;
 		this.modelName = modelName;
+		this.type = type;
 		this.stock = stock;
 		//call id generator
 	}
