@@ -270,7 +270,7 @@ public class UserInterface {
 			String applianceID = getToken("Enter appliance id");
 			result = library.purchaseAppliance(customerID, applianceID);
 			if (result != null) {
-				System.out.println(result.getBrandName() + "   " + result.getDueDate());
+				System.out.println(result.getBrandName() + "   " + result.getModelName() + " " );
 			} else {
 				System.out.println("Appliance could not be purchased");
 			}
