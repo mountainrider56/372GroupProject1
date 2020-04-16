@@ -180,6 +180,15 @@ public class Appliance implements Serializable {
 	public String getId() {
 		return id;
 	}
+	
+	/**
+	 * Getter for price
+	 * 
+	 * @return price of the appliance
+	 */
+	public double getPrice() {
+		return price;
+	}
 
 	/**
 	 * Getter for borrower
