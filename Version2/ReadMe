@@ -1,1 +1,8 @@
 Version 2
+
+Todo List Priority #1 
+  - Finish Repair Class
+    - Enroll in Repair Plan (Business Process #5 )
+    - Withdraw from a Repair Plan (Business Process #6 )
+    - Charge repair plan (Business Process #7 )
+    - List all user with repair plan(could be implemented by different class) 
