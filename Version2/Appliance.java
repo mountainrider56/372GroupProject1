@@ -21,7 +21,7 @@ public class Appliance implements Serializable {
 	private String brandName;
 	private String modelName;
 	private String id;
-	// Add int stock
+	private int stock;
 	private Customer purchasedBy;
 	private List backOrders = new LinkedList();
 	private Calendar dueDate;
@@ -35,10 +35,11 @@ public class Appliance implements Serializable {
 	 */
 	
 	//                                                      Remove ID
-	public Appliance(String brandName, String modelName, String id) {
+	public Appliance(String brandName, String modelName, int stock) {
 		this.brandName = brandName;
 		this.modelName = modelName;
-		this.id = id;
+		this.stock = stock;
+		//call id generator
 	}
 
 	/**
