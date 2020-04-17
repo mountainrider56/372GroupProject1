@@ -89,6 +89,9 @@ public class CustomerList implements Serializable {
      */
     @Override
     public String toString() {
-        return customers.toString();
+        
+    	
+    	
+    	return customers.toString();
     }
 }

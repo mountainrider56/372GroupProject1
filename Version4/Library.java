@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
@@ -23,8 +24,31 @@ public class Library implements Serializable {
 	public static final int OPERATION_COMPLETED = 7;
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_CUSTOMER = 9;
-	private Catalog catalog;
+	public Catalog catalog;
 	private CustomerList customerList;
+	private repairPlanList repairPlanList;
+	private ApplianceList applianceList;
+	public ArrayList genericApplinaceList = new ArrayList();
+	
+
+	public CustomerList getCustomerList() {
+		return customerList;
+	}
+	
+	public ApplianceList getApplinaceList() {
+		return applianceList;
+	}
+
+	public void setCustomerList(CustomerList customerList) {
+		this.customerList = customerList;
+	}
+	public void setRepairPlanList(repairPlanList repairPlanList) {
+		this.repairPlanList = repairPlanList;
+	}
+	public void setApplianceList(ApplianceList applinaceList) {
+		this.applianceList = applianceList;
+	}
+
 	private static Library library;
 
 	/**
@@ -58,51 +82,47 @@ public class Library implements Serializable {
 	 * @param id     appliance id
 	 * @return the Appliance object created
 	 */
+	
 	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
-		String monthlyRepairPlanCost, String capacity, String heatOutput) {
-
-		switch(typeOfAppliance) {
+								String monthlyRepairPlanCost, String capacity, String heatOutput) {
 		
-			case "1" : 
-				Washer washer = new Washer(brandName, modelName, price, monthlyRepairPlanCost);
-				catalog.insertAppliance(washer); 
-				break;
-				
-			case "2" : 
-				Dryer dryer = new Dryer(brandName, modelName, price, monthlyRepairPlanCost);
-				catalog.insertAppliance(dryer); 
-				break;
-				
-			// kitchen range and dish washers
-			case "3" : 
-				KitchenRange kitchenRange = new KitchenRange(brandName, modelName, price);
-				catalog.insertAppliance(kitchenRange);
-				break;
+		switch(typeOfAppliance) {
+		case "1" : 
+			Washer washer = new Washer(brandName, modelName, price, monthlyRepairPlanCost);
+			//applianceList.insertAppliance(washer);
+			catalog.insertAppliance(washer);
+			//applianceList.add(washer); // add the washer to a master list
 			
-			case "4" :  
-				DishWasher dishwasher = new DishWasher(brandName, modelName, price);
-				catalog.insertAppliance(dishwasher);
-				break;
+			break;
+		case "2" : 
+			Dryer dryer = new Dryer(brandName, modelName, price, monthlyRepairPlanCost);
+
+		// kitchen range and dish washers
+		case "3" : 
+			KitchenRange kitchenRange = new KitchenRange(brandName, modelName, price);
+			break;
 			
-			// refrigerators
-			case "5" : 
-				Refrigerator refrigerator = new Refrigerator(brandName, modelName, price, capacity);
-				catalog.insertAppliance(refrigerator);
-				break;
-			
-			// furnaces 
-			case "6" : 
-				Furnace furnace = new Furnace(brandName, modelName, price, heatOutput);
-				catalog.insertAppliance(furnace);
-				break;
-			
-			default:
-				System.out.println("An error has occurred");
+		case "4" :  
+			DishWasher dishwasher = new DishWasher(brandName, modelName, price);
+			break;
+
+		// refrigerators
+		case "5" : 
+			Refrigerator refrigerator = new Refrigerator(brandName, modelName, price, capacity);
+			break;
+
+		// furnaces 
+		case "6" : 
+			Furnace furnace = new Furnace(brandName, modelName, price, heatOutput);
+			break;
+
+		default:
+			System.out.println("An error has occurred");
 		}
 		
-		// Not sure what this is doing, fix it later
+		
 		//if (catalog.insertAppliance(appliance)) {
-		//return (appliance);
+		//	return (appliance);
 		//}
 		return null;
 	}
@@ -122,11 +142,35 @@ public class Library implements Serializable {
 		return null;
 	}
 	
-	public void addInventory(String applianceId, double quantity) {
-		Appliance appliance; 
+	
+	// Work in progress. 
+	public void enrollInRepairPlan(int cost, Customer c, String applinaceID) {
 		
-		appliance = catalog.search(applianceId);
-		appliance.stock = quantity; 
+		// Check to see if the applinaceID can have an enrollment plan.
+		try {
+			Dryer a = (Dryer) ApplianceList.getApplianceList().search(applinaceID);
+			if(a!=null)
+			{
+				// create repair plan  
+				RepairPlan r1 = new RepairPlan(cost, c, a);
+				// Add repair plan to repairplanlist
+				
+			}
+			
+			// No dryer found try washer.
+			if(a==null)
+			{
+				Washer w = (Washer) ApplianceList.getApplianceList().search(applinaceID);
+			}
+		} catch(Exception e){
+			System.out.println("err");
+		}
+	
+		
+		
+		
+	
+		
 	}
 
 	/**
@@ -142,7 +186,7 @@ public class Library implements Serializable {
 		if (appliance == null) {
 			return APPLIANCE_NOT_FOUND;
 		}
-		if (appliance.getIssuer() == null) {
+		if (appliance.getPurchaser() == null) {
 			return APPLIANCE_NOT_PURCHASED;
 		}
 		Customer customer = customerList.search(customerId);
@@ -224,58 +268,29 @@ public class Library implements Serializable {
 	 * 
 	 * @param customerId customer id
 	 * @param applianceId   appliance id
-	 * @return the appliance issued
+	 * @return the appliance purchased
 	 */
-//	public Appliance issueAppliance(String customerId, String applianceId) {
-//		Appliance appliance = catalog.search(applianceId);
-//		if (appliance == null) {
-//			return (null);
-//		}
-//		if (appliance.getIssuer() != null) {
-//			return (null);
-//		}
-//		Customer customer = customerList.search(customerId);
-//		if (customer == null) {
-//			return (null);
-//		}
-//		if (!(appliance.issue(customer) && customer.issue(appliance))) {
-//			return null;
-//		}
-//		return (appliance);
-//	}
-//	
-	/**
-	 * Organizes the issuing of a appliance
-	 * 
-	 * @param customerId customer id
-	 * @param applianceId   appliance id
-	 * @return the appliance issued
-	 */
-	public Appliance purchaseAppliance(String customerId, String applianceId, double quantity) {
+	public Appliance purchaseAppliance(String customerId, String applianceId) {
 		Appliance appliance = catalog.search(applianceId);
 		if (appliance == null) {
 			return (null);
 		}
-
+		if (appliance.getPurchaser() != null) {
+			return (null);
+		}
 		Customer customer = customerList.search(customerId);
 		if (customer == null) {
 			return (null);
 		}
-		
-		if (quantity <= appliance.stock) {
-			appliance.stock -= quantity; 
-			customer.issue(appliance,quantity); 
-		} else {
-			appliance.stock = 0; 
-			customer.issue(appliance,quantity); 
+		if (!(appliance.purchase(customer) && customer.purchase(appliance))) {
+			return null;
 		}
-		
 		return (appliance);
 	}
 
 
 	/**
-	 * Returns an iterator to the appliances issued to a customer
+	 * Returns an iterator to the appliances purchased to a customer
 	 * 
 	 * @param customerId customer id
 	 * @return iterator to the collection
@@ -285,7 +300,7 @@ public class Library implements Serializable {
 		if (customer == null) {
 			return (null);
 		} else {
-			return (customer.getAppliancesIssued());
+			return (customer.getAppliancesPurchased());
 		}
 	}
 
@@ -303,7 +318,7 @@ public class Library implements Serializable {
 		if (appliance.hasBackOrder()) {
 			return (APPLIANCE_HAS_BACKORDER);
 		}
-		if (appliance.getIssuer() != null) {
+		if (appliance.getPurchaser() != null) {
 			return (APPLIANCE_PURCHASED);
 		}
 		if (catalog.removeAppliance(applianceId)) {
@@ -319,7 +334,7 @@ public class Library implements Serializable {
 	 * date
 	 * 
 	 * @param customerId customer id
-	 * @param date     date of issue
+	 * @param date     date of purchase
 	 * @return iterator to the collection
 	 */
 	public Iterator getTransactions(String customerId, Calendar date) {
@@ -377,5 +392,7 @@ public class Library implements Serializable {
 	@Override
 	public String toString() {
 		return catalog + "\n" + customerList;
+		
 	}
+
 }

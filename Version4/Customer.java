@@ -16,9 +16,10 @@ public class Customer implements Serializable {
 	private String phone;
 	private String id;
 	private static final String CUSTOMER_STRING = "M";
-	private List appliancesIssued = new LinkedList();
+	private List appliancesPurchased = new LinkedList();
 	private List appliancesOnBackOrder = new LinkedList();
 	private List transactions = new LinkedList();
+	
 
 	/**
 	 * Represents a single customer
@@ -33,27 +34,27 @@ public class Customer implements Serializable {
 	}
 
 	/**
-	 * Stores the appliance as issued to the customer
+	 * Stores the appliance as purchased to the customer
 	 * 
-	 * @param appliance the appliance to be issued
-	 * @return true iff the appliance could be marked as issued. always true currently
+	 * @param appliance the appliance to be purchased
+	 * @return true iff the appliance could be marked as purchased. always true currently
 	 */
-	public boolean issue(Appliance appliance, double quantity) {
-		if (appliancesIssued.add(appliance)) {
-			transactions.add(new Transaction("Appliance issued ", appliance.getBrandName()));
+	public boolean purchase(Appliance appliance) {
+		if (appliancesPurchased.add(appliance)) {
+			transactions.add(new Transaction("Appliance purchased ", appliance.getBrandName()));
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Marks the appliance as not issued to the customer
+	 * Marks the appliance as not purchased to the customer
 	 * 
 	 * @param appliance the appliance to be returned
 	 * @return true iff the appliance could be marked as marked as returned
 	 */
 	public boolean returnAppliance(Appliance appliance) {
-		if (appliancesIssued.remove(appliance)) {
+		if (appliancesPurchased.remove(appliance)) {
 			transactions.add(new Transaction("Appliance returned ", appliance.getBrandName()));
 			return true;
 		}
@@ -62,12 +63,12 @@ public class Customer implements Serializable {
 
 
 	/**
-	 * Gets an iterator to the issued appliances
+	 * Gets an iterator to the purchased appliances
 	 * 
-	 * @return Iterator to the collection of issued appliances
+	 * @return Iterator to the collection of purchased appliances
 	 */
-	public Iterator getAppliancesIssued() {
-		return (appliancesIssued.listIterator());
+	public Iterator getAppliancesPurchased() {
+		return (appliancesPurchased.listIterator());
 	}
 
 	/**
@@ -170,9 +171,9 @@ public class Customer implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String string = "Customer name " + name + " id " + id + "phone " + phone;
+		String string = "Customer name " + name + " id " + id + "\nphone " + phone;
 		string += " borrowed: [";
-		for (Iterator iterator = appliancesIssued.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = appliancesPurchased.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
 			string += " " + appliance.getBrandName();
 		}
@@ -185,7 +186,7 @@ public class Customer implements Serializable {
 		for (Iterator iterator = transactions.iterator(); iterator.hasNext();) {
 			string += (Transaction) iterator.next();
 		}
-		string += "]";
+		string += "]\n\n";
 		return string;
 	}
 
