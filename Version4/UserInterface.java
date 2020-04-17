@@ -29,19 +29,18 @@ public class UserInterface {
 	private static final int ADD_CUSTOMER = 1;
 	private static final int ADD_APPLIANCE_MODEL = 2;
 	private static final int PURCHASE_ORDER = 3;
-	
-	private static final int LIST_CUSTOMERS = 4;
-	private static final int LIST_REPAIR_PLANS = 5;
-	private static final int LIST_APPILANCES = 6;
-	
-	
+	private static final int PURCHASE_REPAIR_PLAN = 4;
+
 	private static final int PLACE_BACKORDER = 7;
 	private static final int REMOVE_BACKORDER = 8;
 	private static final int PROCESS_BACKORDER = 9;
 	private static final int GET_TRANSACTIONS = 10;
 	private static final int SAVE = 11;
-	private static final int HELP = 12;
-
+	private static final int HELP = 16;
+	private static final int LIST_CUSTOMERS = 13;
+	private static final int LIST_REPAIR_PLANS = 14;
+	private static final int LIST_APPILANCES = 15;
+	
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.
 	 * Otherwise, it gets a singleton Library object.
@@ -115,12 +114,12 @@ public class UserInterface {
 	 * @return the integer corresponding to the string
 	 * 
 	 */
-	public double getNumber(String prompt) {
+	public int getNumber(String prompt) {
 		do {
 			try {
 				String item = getToken(prompt);
-				Double number = Double.valueOf(item);
-				return number.doubleValue();
+				Integer number = Integer.valueOf(item);
+				return number.intValue();
 			} catch (NumberFormatException nfe) {
 				System.out.println("Please input a number ");
 			}
@@ -171,20 +170,21 @@ public class UserInterface {
 	 * 
 	 */
 	public void help() {
-		System.out.println("Enter a number between 0 and 12 as explained below:");
+		System.out.println("Enter a number between 0 and 13 as explained below:");
 		System.out.println(EXIT + " to Exit\n");
 		System.out.println(ADD_CUSTOMER + " to add a Customer");
 		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
-		System.out.println(PURCHASE_ORDER + " to  issue order to a  customer");
-
-		// list of 3 help goes here 
-		
+		System.out.println(PURCHASE_ORDER + " to  purchase order to a  customer");
+		System.out.println(PURCHASE_REPAIR_PLAN + " to  purchase a repair plan");
 		System.out.println(PLACE_BACKORDER + " to  place a backorder on an appliance");
 		System.out.println(REMOVE_BACKORDER + " to  remove a backorder on an appliance");
 		System.out.println(PROCESS_BACKORDER + " to  process backorder");
 		System.out.println(GET_TRANSACTIONS + " to  print transactions");
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
+		System.out.println(LIST_CUSTOMERS + " to list customers");
+		System.out.println(LIST_REPAIR_PLANS + " to list all users in a repair plan");
+		System.out.println(LIST_APPILANCES + " to list appliances");
 	}
 
 	/**
@@ -260,49 +260,12 @@ public class UserInterface {
 //			}
 		} while (yesOrNo("Add more Models?"));
 	}
-	
-	// adding Inventory 
-	public void addInventory() {
-		
-		
-		do {
-			String applianceId = getToken("Enter the Appliance ID"); 
-			double quantity = getNumber("Enter the quantity being added to the appliance"); 
-			library.addInventory(applianceId, quantity); 
-		
-		
-		} while (yesOrNo("Add more stocks for other appliances?"));
-	}
 
 	/**
 	 * Method to be called for issuing appliances. Prompts the user for the appropriate
 	 * values and uses the appropriate Library method for issuing appliances.
 	 * 
 	 */
-	public void issueOrders() {
-		Appliance result;
-		String customerID = getToken("Enter customer id");
-		if (library.searchCustomer(customerID) == null) {
-			System.out.println("No such customer");
-			return;
-		}
-		do {
-			String applianceID = getToken("Enter appliance id");
-			result = library.issueAppliance(customerID, applianceID);
-			if (result != null) {
-				System.out.println(result.getBrandName() + "   " + result.getDueDate());
-			} else {
-				System.out.println("Appliance could not be issued");
-			}
-		} while (yesOrNo("Issue more appliances?"));
-	}
-	
-	
-	/* 
-	 * The actor identifies the appliance by its id and the customer by the customer id. 
-	The actor enters the quantity as well. If there is enough on stock, the purchase is immediate. 
-	Otherwise, this goes on back order. There is no concept of a backorder for a furnace.
-	*/
 	public void purchaseOrders() {
 		Appliance result;
 		String customerID = getToken("Enter customer id");
@@ -312,12 +275,9 @@ public class UserInterface {
 		}
 		do {
 			String applianceID = getToken("Enter appliance id");
-			String quantityOfAppliance = getToken("Enter quantity you would like to purchase");
-			result = library.issueAppliance(customerID, applianceID);
-			// result = library.purchaseAppliance(customerID, applianceID, quantityOfAppliance);
-			
+			result = library.purchaseAppliance(customerID, applianceID);
 			if (result != null) {
-				System.out.println(result.getBrandName() + " purchase was successful");
+				System.out.println(result.getBrandName() + "   " + result.getModelName() + " " );
 			} else {
 				System.out.println("Appliance could not be purchased");
 			}
@@ -325,9 +285,28 @@ public class UserInterface {
 	}
 
 	
+	public void purchaseRepairPlan() {
+		System.out.println("Repair Plan Purchase\n");
+		String applianceID = getToken("Enter appliance id");
+		String customerID = getToken("Enter customer id");
+		int cost = Integer.parseInt(getToken("Enter cost"));
+		//Search for appliance
+		
+		
+		
+		//Search for the customer object
+		Customer c = library.searchCustomer(customerID);
+		if(c!=null)
+		{
+			System.out.print(c.toString());
+			// Assign the customer to repair plan
+			//RepairPlan r = new RepairPlan(cost,c,a);
+		}
+		
+		
+	}
+	
 
-	
-	
 
 	/**
 	 * Method to be called for placing a backOrder. Prompts the user for the appropriate
@@ -337,14 +316,8 @@ public class UserInterface {
 	public void placeBackOrder() {
 		String customerID = getToken("Enter customer id");
 		String applianceID = getToken("Enter appliance id");
-		
-		// need to remove duration 
 		int duration = getNumber("Enter duration of backOrder");
-		
 		int result = library.placeBackOrder(customerID, applianceID, duration);
-		
-		// int result = library.placeBackOrder(customerID, applianceID);
-		
 		switch (result) {
 		case Library.APPLIANCE_NOT_FOUND:
 			System.out.println("No such Appliance in Library");
@@ -482,7 +455,10 @@ public class UserInterface {
 				addModel();
 				break;
 			case PURCHASE_ORDER:
-				issueOrders();
+				purchaseOrders();
+				break;
+			case PURCHASE_REPAIR_PLAN:
+				purchaseRepairPlan();
 				break;
 
 			case PLACE_BACKORDER:
@@ -503,10 +479,39 @@ public class UserInterface {
 			case HELP:
 				help();
 				break;
+			
+			case LIST_CUSTOMERS:
+				list_Customers();
+				break;
+			case LIST_REPAIR_PLANS:
+				list_Repair_Plans();
+				break;
+				
+			case LIST_APPILANCES:
+				list_appliances();
+				break;
 			}
 		}
 	}
 
+	private void list_appliances() {
+		// TODO Auto-generated method stub
+		System.out.println("Appliance List\n-----------\n");
+		System.out.println(library.catalog.toString());
+		//System.out.println(library.genericApplinaceList.toString());
+	}
+
+	private void list_Repair_Plans() {
+		// TODO Auto-generated method stub
+		System.out.println("List of users in Repair Plans\n-----------\n");
+	}
+
+	private void list_Customers() {
+		// print out customers
+		System.out.println("Customer List\n-----------\n");
+		System.out.println(library.getCustomerList().toString());
+		
+	}
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 
