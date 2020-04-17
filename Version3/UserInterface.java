@@ -29,7 +29,12 @@ public class UserInterface {
 	private static final int ADD_CUSTOMER = 1;
 	private static final int ADD_APPLIANCE_MODEL = 2;
 	private static final int PURCHASE_ORDER = 3;
-
+	
+	private static final int LIST_CUSTOMERS = 4;
+	private static final int LIST_REPAIR_PLANS = 5;
+	private static final int LIST_APPILANCES = 6;
+	
+	
 	private static final int PLACE_BACKORDER = 7;
 	private static final int REMOVE_BACKORDER = 8;
 	private static final int PROCESS_BACKORDER = 9;
@@ -110,12 +115,12 @@ public class UserInterface {
 	 * @return the integer corresponding to the string
 	 * 
 	 */
-	public int getNumber(String prompt) {
+	public double getNumber(String prompt) {
 		do {
 			try {
 				String item = getToken(prompt);
-				Integer number = Integer.valueOf(item);
-				return number.intValue();
+				Double number = Double.valueOf(item);
+				return number.doubleValue();
 			} catch (NumberFormatException nfe) {
 				System.out.println("Please input a number ");
 			}
@@ -172,6 +177,8 @@ public class UserInterface {
 		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
 		System.out.println(PURCHASE_ORDER + " to  issue order to a  customer");
 
+		// list of 3 help goes here 
+		
 		System.out.println(PLACE_BACKORDER + " to  place a backorder on an appliance");
 		System.out.println(REMOVE_BACKORDER + " to  remove a backorder on an appliance");
 		System.out.println(PROCESS_BACKORDER + " to  process backorder");
@@ -253,6 +260,43 @@ public class UserInterface {
 //			}
 		} while (yesOrNo("Add more Models?"));
 	}
+	
+	public void addInventory() {
+		Appliance result;
+		do {
+			int quantity;
+			do {
+				quantity = getNumber("Enter " + Library.BOOK + " for book or "
+						+ Library.PERIODICAL + " for periodical");
+			} while (type != Library.BOOK && type != Library.PERIODICAL);
+			String title = getToken("Enter title");
+			String author = "";
+			if (type == Library.BOOK) {
+				author = getToken("Enter author");
+			}
+			String id = getToken("Enter id");
+			result = library.addLoanableItem(type, title, author, id);
+			if (result != null) {
+				System.out.println(result);
+			} else {
+				System.out.println("Book could not be added");
+			}
+			if (!yesOrNo("Add more books?")) {
+				break;
+			}
+		} while (true);
+		
+		
+		do {
+			String brandName = getToken("Enter the Appliance ID"); 
+			quantity = getNumber("Enter the quantity being added to the appliance"); 
+			
+			
+		
+		
+		
+		} while (yesOrNo("Add more Models?"));
+	}
 
 	/**
 	 * Method to be called for issuing appliances. Prompts the user for the appropriate
@@ -276,6 +320,33 @@ public class UserInterface {
 			}
 		} while (yesOrNo("Issue more appliances?"));
 	}
+	
+	
+	/* 
+	 * The actor identifies the appliance by its id and the customer by the customer id. 
+	The actor enters the quantity as well. If there is enough on stock, the purchase is immediate. 
+	Otherwise, this goes on back order. There is no concept of a backorder for a furnace.
+	*/
+	public void purchaseOrders() {
+		Appliance result;
+		String customerID = getToken("Enter customer id");
+		if (library.searchCustomer(customerID) == null) {
+			System.out.println("No such customer");
+			return;
+		}
+		do {
+			String applianceID = getToken("Enter appliance id");
+			String quantityOfAppliance = getToken("Enter quantity you would like to purchase");
+			result = library.issueAppliance(customerID, applianceID);
+			// result = library.purchaseAppliance(customerID, applianceID, quantityOfAppliance);
+			
+			if (result != null) {
+				System.out.println(result.getBrandName() + " purchase was successful");
+			} else {
+				System.out.println("Appliance could not be purchased");
+			}
+		} while (yesOrNo("Issue more appliances?"));
+	}
 
 	
 
@@ -290,8 +361,14 @@ public class UserInterface {
 	public void placeBackOrder() {
 		String customerID = getToken("Enter customer id");
 		String applianceID = getToken("Enter appliance id");
+		
+		// need to remove duration 
 		int duration = getNumber("Enter duration of backOrder");
+		
 		int result = library.placeBackOrder(customerID, applianceID, duration);
+		
+		// int result = library.placeBackOrder(customerID, applianceID);
+		
 		switch (result) {
 		case Library.APPLIANCE_NOT_FOUND:
 			System.out.println("No such Appliance in Library");
