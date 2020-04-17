@@ -261,41 +261,17 @@ public class UserInterface {
 		} while (yesOrNo("Add more Models?"));
 	}
 	
+	// adding Inventory 
 	public void addInventory() {
-		Appliance result;
-		do {
-			int quantity;
-			do {
-				quantity = getNumber("Enter " + Library.BOOK + " for book or "
-						+ Library.PERIODICAL + " for periodical");
-			} while (type != Library.BOOK && type != Library.PERIODICAL);
-			String title = getToken("Enter title");
-			String author = "";
-			if (type == Library.BOOK) {
-				author = getToken("Enter author");
-			}
-			String id = getToken("Enter id");
-			result = library.addLoanableItem(type, title, author, id);
-			if (result != null) {
-				System.out.println(result);
-			} else {
-				System.out.println("Book could not be added");
-			}
-			if (!yesOrNo("Add more books?")) {
-				break;
-			}
-		} while (true);
 		
 		
 		do {
-			String brandName = getToken("Enter the Appliance ID"); 
-			quantity = getNumber("Enter the quantity being added to the appliance"); 
-			
-			
+			String applianceId = getToken("Enter the Appliance ID"); 
+			double quantity = getNumber("Enter the quantity being added to the appliance"); 
+			library.addInventory(applianceId, quantity); 
 		
 		
-		
-		} while (yesOrNo("Add more Models?"));
+		} while (yesOrNo("Add more stocks for other appliances?"));
 	}
 
 	/**

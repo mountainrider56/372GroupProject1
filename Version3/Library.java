@@ -92,14 +92,14 @@ public class Library implements Serializable {
 			
 			default:
 				System.out.println("An error has occurred");
-}
-
-// Not sure what this is doing, fix it later
-//if (catalog.insertAppliance(appliance)) {
-//return (appliance);
-//}
-return null;
-}
+		}
+		
+		// Not sure what this is doing, fix it later
+		//if (catalog.insertAppliance(appliance)) {
+		//return (appliance);
+		//}
+		return null;
+	}
 
 	/**
 	 * Organizes the operations for adding a customer
@@ -114,6 +114,13 @@ return null;
 			return (customer);
 		}
 		return null;
+	}
+	
+	public void addInventory(String applianceId, double quantity) {
+		Appliance appliance; 
+		
+		appliance = catalog.search(applianceId);
+		appliance.stock = quantity; 
 	}
 
 	/**

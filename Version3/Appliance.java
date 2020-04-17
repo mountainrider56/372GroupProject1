@@ -23,7 +23,7 @@ public class Appliance implements Serializable {
 	private String modelName;
 	private static final String APPLIANCE_STRING = "A";
 	private String id;
-	private int stock;
+	public double stock;
 	private Customer issuedBy;
 	private List backOrders = new LinkedList();
 	private Calendar dueDate;
@@ -43,7 +43,7 @@ public class Appliance implements Serializable {
 		this.brandName = brandName;
 		this.modelName = modelName;
 		this.price = price;
-		this.stock = 0;
+		this.stock = 0.0;
 		id = APPLIANCE_STRING + (ApplianceIdServer.instance()).getId();
 	}
 
