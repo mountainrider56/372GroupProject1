@@ -21,12 +21,14 @@ public class Appliance implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String brandName;
 	private String modelName;
+	private static final String APPLIANCE_STRING = "A";
 	private String id;
 	private int stock;
 	private Customer issuedBy;
 	private List backOrders = new LinkedList();
 	private Calendar dueDate;
 	private double price ; 
+	
 
 	/**
 	 * Creates a appliance with the given id, brandName, and modelName name
@@ -42,7 +44,7 @@ public class Appliance implements Serializable {
 		this.modelName = modelName;
 		this.price = price;
 		this.stock = 0;
-		//call id generator
+		id = APPLIANCE_STRING + (ApplianceIdServer.instance()).getId();
 	}
 
 
