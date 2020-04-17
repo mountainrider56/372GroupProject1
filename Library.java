@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
@@ -23,14 +24,29 @@ public class Library implements Serializable {
 	public static final int OPERATION_COMPLETED = 7;
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_CUSTOMER = 9;
-	private Catalog catalog;
+	public Catalog catalog;
 	private CustomerList customerList;
+	private repairPlanList repairPlanList;
+	private ApplianceList applianceList;
+	public ArrayList genericApplinaceList = new ArrayList();
+	
+
 	public CustomerList getCustomerList() {
 		return customerList;
+	}
+	
+	public ApplianceList getApplinaceList() {
+		return applianceList;
 	}
 
 	public void setCustomerList(CustomerList customerList) {
 		this.customerList = customerList;
+	}
+	public void setRepairPlanList(repairPlanList repairPlanList) {
+		this.repairPlanList = repairPlanList;
+	}
+	public void setApplianceList(ApplianceList applinaceList) {
+		this.applianceList = applianceList;
 	}
 
 	private static Library library;
@@ -73,6 +89,10 @@ public class Library implements Serializable {
 		switch(typeOfAppliance) {
 		case "1" : 
 			Washer washer = new Washer(brandName, modelName, price, monthlyRepairPlanCost);
+			//applianceList.insertAppliance(washer);
+			catalog.insertAppliance(washer);
+			//applianceList.add(washer); // add the washer to a master list
+			
 			break;
 		case "2" : 
 			Dryer dryer = new Dryer(brandName, modelName, price, monthlyRepairPlanCost);
@@ -100,9 +120,9 @@ public class Library implements Serializable {
 			System.out.println("An error has occurred");
 		}
 		
-		// Not sure what this is doing, fix it later
+		
 		//if (catalog.insertAppliance(appliance)) {
-			//return (appliance);
+		//	return (appliance);
 		//}
 		return null;
 	}
@@ -120,6 +140,37 @@ public class Library implements Serializable {
 			return (customer);
 		}
 		return null;
+	}
+	
+	
+	// Work in progress. 
+	public void enrollInRepairPlan(int cost, Customer c, String applinaceID) {
+		
+		// Check to see if the applinaceID can have an enrollment plan.
+		try {
+			Dryer a = (Dryer) ApplianceList.getApplianceList().search(applinaceID);
+			if(a!=null)
+			{
+				// create repair plan  
+				RepairPlan r1 = new RepairPlan(cost, c, a);
+				// Add repair plan to repairplanlist
+				
+			}
+			
+			// No dryer found try washer.
+			if(a==null)
+			{
+				Washer w = (Washer) ApplianceList.getApplianceList().search(applinaceID);
+			}
+		} catch(Exception e){
+			System.out.println("err");
+		}
+	
+		
+		
+		
+	
+		
 	}
 
 	/**
@@ -343,4 +394,5 @@ public class Library implements Serializable {
 		return catalog + "\n" + customerList;
 		
 	}
+
 }
