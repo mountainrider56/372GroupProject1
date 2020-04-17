@@ -29,6 +29,7 @@ public class UserInterface {
 	private static final int ADD_CUSTOMER = 1;
 	private static final int ADD_APPLIANCE_MODEL = 2;
 	private static final int PURCHASE_ORDER = 3;
+	private static final int PURCHASE_REPAIR_PLAN = 4;
 
 	private static final int PLACE_BACKORDER = 7;
 	private static final int REMOVE_BACKORDER = 8;
@@ -39,6 +40,7 @@ public class UserInterface {
 	private static final int LIST_CUSTOMERS = 13;
 	private static final int LIST_REPAIR_PLANS = 14;
 	private static final int LIST_APPILANCES = 15;
+	
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.
 	 * Otherwise, it gets a singleton Library object.
@@ -173,7 +175,7 @@ public class UserInterface {
 		System.out.println(ADD_CUSTOMER + " to add a Customer");
 		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
 		System.out.println(PURCHASE_ORDER + " to  purchase order to a  customer");
-
+		System.out.println(PURCHASE_REPAIR_PLAN + " to  purchase a repair plan");
 		System.out.println(PLACE_BACKORDER + " to  place a backorder on an appliance");
 		System.out.println(REMOVE_BACKORDER + " to  remove a backorder on an appliance");
 		System.out.println(PROCESS_BACKORDER + " to  process backorder");
@@ -283,9 +285,28 @@ public class UserInterface {
 	}
 
 	
+	public void purchaseRepairPlan() {
+		System.out.println("Repair Plan Purchase\n");
+		String applianceID = getToken("Enter appliance id");
+		String customerID = getToken("Enter customer id");
+		int cost = Integer.parseInt(getToken("Enter cost"));
+		//Search for appliance
+		
+		
+		
+		//Search for the customer object
+		Customer c = library.searchCustomer(customerID);
+		if(c!=null)
+		{
+			System.out.print(c.toString());
+			// Assign the customer to repair plan
+			//RepairPlan r = new RepairPlan(cost,c,a);
+		}
+		
+		
+	}
+	
 
-	
-	
 
 	/**
 	 * Method to be called for placing a backOrder. Prompts the user for the appropriate
@@ -436,6 +457,9 @@ public class UserInterface {
 			case PURCHASE_ORDER:
 				purchaseOrders();
 				break;
+			case PURCHASE_REPAIR_PLAN:
+				purchaseRepairPlan();
+				break;
 
 			case PLACE_BACKORDER:
 				placeBackOrder();
@@ -473,6 +497,8 @@ public class UserInterface {
 	private void list_appliances() {
 		// TODO Auto-generated method stub
 		System.out.println("Appliance List\n-----------\n");
+		System.out.println(library.catalog.toString());
+		//System.out.println(library.genericApplinaceList.toString());
 	}
 
 	private void list_Repair_Plans() {
