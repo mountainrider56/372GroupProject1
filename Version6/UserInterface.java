@@ -492,9 +492,49 @@ public class UserInterface {
 
 	private void list_appliances() {
 		// TODO Auto-generated method stub
-		System.out.println("Appliance List\n-----------\n");
-		System.out.println(library.catalog.toString());
-		//System.out.println(library.genericApplinaceList.toString());
+		String result = getToken("Appliance List\n Press 1 to display all\n Press 2 to display specific type");
+		
+		
+		// Display All Appliances
+		if(result.equals("1"))
+		{
+			// List out all appliances
+			System.out.println(library.catalog.toString());
+		}
+		// Display Specific Appliances
+		else if(result.equals("2")){
+			String applinaceType = getToken("Choose Appliance Type:\n1: For Washers\n2: For Dyers\n3: For KitchenRanges\n4: For"
+					+ "Dishwashers\n5: For Refridgerators\n6: For Furnaces");
+			
+			// Display Only Washers
+			if(applinaceType.equals("1")) {
+				System.out.println(library.catalog.toStringApplianceType("washerType"));
+			}
+			// Display Only Dryers
+			if(applinaceType.equals("2")) {
+				System.out.println(library.catalog.toStringApplianceType("dryerType"));
+			}
+			// Display Only KitchenRanges
+			if(applinaceType.equals("3")) {
+				System.out.println(library.catalog.toStringApplianceType("kitchenRangeType"));
+			}
+			// Display Only Dishwashers
+			if(applinaceType.equals("4")) {
+				System.out.println(library.catalog.toStringApplianceType("dishwasherType"));
+			}
+			// Display Only Refridgerators
+			if(applinaceType.equals("5")) {
+				System.out.println(library.catalog.toStringApplianceType("refrigeratorType"));
+			}
+			// Display Only Furnaces
+			if(applinaceType.equals("6")) {
+				System.out.println(library.catalog.toStringApplianceType("furnaceType"));
+			}
+		}
+		else {
+			System.out.println("No vaild choice picked");
+		}
+		
 	}
 
 	private void list_Repair_Plans() {

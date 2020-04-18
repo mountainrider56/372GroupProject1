@@ -92,6 +92,24 @@ public class Catalog implements Serializable {
     public Iterator getAppliances() {
         return appliances.iterator();
     }
+    
+ // usecase list appliances : Specific
+    public String toStringApplianceType(String type) {
+    	
+    	// Generate a new list that only contains washers
+    	List specificAppliances = new LinkedList();
+		
+    	// Populate the list
+    	for(int i=0; i<appliances.size();i++) {
+    		Appliance a = (Appliance) appliances.get(i);
+    		if(a.applianceType.equals(type)) {
+    			specificAppliances.add(a);
+    		}
+    	}
+    	
+    	return specificAppliances.toString();
+
+    }
 
     /**
      * String form of the collection
