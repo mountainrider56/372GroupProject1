@@ -23,10 +23,9 @@ public class AutomatedTester {
 	 * Tests Customer creation.
 	 */
 	public void test() {
-		String[] names = { "Sam", "Jane", "Belle","Frank","Joe","John","Jill","Francis","Roma" };
-		String[] phones = { "651-555-4444", "547-888-1558", "155-555-5555","651-222-4222","651-785-7508","651-758-5888",
-				  "594-112-2310","542-432-3333","651-888-0010"};
-		Customer[] customers = new Customer[9];
+		String[] names = { "n1", "n2", "n3" };
+		String[] phones = { "p1", "p2", "p3" };
+		Customer[] customers = new Customer[3];
 		for (int count = 0; count < names.length; count++) {
 			customers[count] = library.addCustomer(names[count], phones[count]);
 			assert customers[count].getName().equals(names[count]);
@@ -34,7 +33,6 @@ public class AutomatedTester {
 		}
 		
 		// Appliances
-<<<<<<< HEAD
 				Appliance[] appliances = new Appliance[3];
 				String[] brandnames = {"Samsung", "LG", "MayTag"};
 				String[] modelnames = {"S1","S2","S3"};
@@ -43,16 +41,5 @@ public class AutomatedTester {
 					appliances[count] = library.addModel("1", prices[count], brandnames[count],
 							modelnames[count], "0", "0", "0");
 				}
-=======
-		Appliance[] appliances = new Appliance[3];
-		String[] brandnames = {"Samsung", "LG", "MayTag"};
-		String[] modelnames = {"S1","S2","S3"};
-		String[] prices = {"555.55","333.33","223.22"};
-		for (int count = 0; count < brandnames.length; count++) {
-			appliances[count] = library.addModel("1", prices[count], brandnames[count],
-					modelnames[count], "0", "0", "0");
-		}
-		
->>>>>>> a3030ab5b639b7ac5bf63d41a71ed148d3387f7a
 	}
 }
