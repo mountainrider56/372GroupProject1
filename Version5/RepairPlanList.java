@@ -71,17 +71,12 @@ public class RepairPlanList implements Serializable {
      *            appliance id
      * @return true iff appliance could be removed
      */
-    public boolean removeRepairPlan(RepairPlan repairPlan) {
-    	Appliance appliance = repairPlan.getAppliance(); 
-    	Customer customer = repairPlan.getCustomer(); 
-    	//Appliance appliance = search(applianceId);
-        if (appliance == null) {
-            return false;
-        } else {
-        	return false ; 
-            //return appliances.remove(appliance);
-        }
+    public boolean withdrawRepairPlan(RepairPlan repairPlan) {
+        	return repairPlans.remove(repairPlan) ; 
+
     }
+    
+
     
     /**
      * Returns an iterator to all appliances

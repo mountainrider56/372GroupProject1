@@ -106,6 +106,18 @@ public class UserInterface {
 		return true;
 	}
 
+	public double getDoubleNumber(String prompt) {
+		do {
+			try {
+				String item = getToken(prompt);
+				Double number = Double.valueOf(item);
+				return number.doubleValue();
+			} catch (NumberFormatException nfe) {
+				System.out.println("Please input a number ");
+			}
+		} while (true);
+	}
+	
 	/**
 	 * Converts the string to a number
 	 * 
@@ -113,7 +125,7 @@ public class UserInterface {
 	 * @return the integer corresponding to the string
 	 * 
 	 */
-	public int getNumber(String prompt) {
+	public int getIntNumber(String prompt) {
 		do {
 			try {
 				String item = getToken(prompt);
@@ -220,32 +232,32 @@ public class UserInterface {
 			
 			String brandName = getToken("Enter the brand Name"); 
 			String modelName = getToken("Enter the model Name"); 
-			String price = getToken("Enter the Price"); 
+			double price = getDoubleNumber("Enter the Price"); 
 
 			
 			switch (typeOfAppliance) {
 			
 			// washer and dryer
 			case "1" : case "2" : 
-				String monthlyRepairPlanCost = getToken("Enter monthly repair plan cost");
-				result = library.addModel(typeOfAppliance, brandName, modelName, price,  monthlyRepairPlanCost, "Null" , "Null");
+				double monthlyRepairPlanCost = getDoubleNumber("Enter monthly repair plan cost");
+				result = library.addModel(typeOfAppliance, price, brandName, modelName,  monthlyRepairPlanCost, 0.0 , 0.0);
 				break;
 			
 			// kitchen range and dish washers
 			case "3" : case "4" :  
-				result = library.addModel(typeOfAppliance,brandName, modelName, price, "Null" , "Null" , "Null");
+				result = library.addModel(typeOfAppliance, price, brandName, modelName, 0.0  , 0.0  , 0.0 );
 				break;
 				
 			// refrigerators
 			case "5" : 
-				String capacity = getToken("Enter capacity");
-				result = library.addModel(typeOfAppliance,brandName, modelName, price, "Null", capacity , "Null");
+				double capacity = getDoubleNumber("Enter capacity");
+				result = library.addModel(typeOfAppliance, price, brandName, modelName, 0.0 , capacity , 0.0 );
 				break;
 			
 			// furnaces 
 			case "6" : 
-				String heatOutput = getToken("Enter heat Output");
-				result = library.addModel(typeOfAppliance, brandName, modelName, price, "Null", "Null" , heatOutput);
+				double heatOutput = getDoubleNumber("Enter heat Output");
+				result = library.addModel(typeOfAppliance, price, brandName, modelName, 0.0 , 0.0  , heatOutput);
 				break;
 			
 			default:
@@ -265,7 +277,7 @@ public class UserInterface {
 	 * values and uses the appropriate Library method for issuing appliances.
 	 * 
 	 */
-	public void issueOrders() {
+	public void purchaseAppliance() {
 		Appliance result;
 		String customerID = getToken("Enter customer id");
 		if (library.searchCustomer(customerID) == null) {
@@ -274,7 +286,8 @@ public class UserInterface {
 		}
 		do {
 			String applianceID = getToken("Enter appliance id");
-			result = library.issueAppliance(customerID, applianceID);
+			int quantity = getIntNumber("Enter quantity of appliance you would like to purchase");
+			result = library.purchaseAppliance(customerID, applianceID, quantity);
 			if (result != null) {
 				System.out.println(result.getBrandName() + "   " + result.getModelName() + " " );
 			} else {
@@ -289,7 +302,7 @@ public class UserInterface {
 
 		do {	
 			String applianceId = getToken("Enter the Appliance ID"); 	
-			double quantity = getNumber("Enter the quantity being added to the appliance"); 	
+			int quantity = getIntNumber("Enter the quantity being added to the appliance"); 	
 			library.addInventory(applianceId, quantity); 	
 
 
@@ -324,11 +337,10 @@ public class UserInterface {
 	 * values and uses the appropriate Library method for placing a backOrder.
 	 * 
 	 */
-	public void placeBackOrder() {
+	public void enrollRepairPlan() {
 		String customerID = getToken("Enter customer id");
 		String applianceID = getToken("Enter appliance id");
-		int duration = getNumber("Enter duration of backOrder");
-		int result = library.placeBackOrder(customerID, applianceID, duration);
+		int result = library.enrollRepairPlan(customerID, applianceID);
 		switch (result) {
 		case Library.APPLIANCE_NOT_FOUND:
 			System.out.println("No such Appliance in Library");
@@ -339,8 +351,8 @@ public class UserInterface {
 		case Library.NO_SUCH_CUSTOMER:
 			System.out.println("Not a valid customer ID");
 			break;
-		case Library.BACKORDER_PLACED:
-			System.out.println("A backOrder has been placed");
+		case Library.OPERATION_COMPLETED:
+			System.out.println("Enrolled in repair plan");
 			break;
 		default:
 			System.out.println("An error has occurred");
@@ -353,10 +365,10 @@ public class UserInterface {
 	 * backOrder.
 	 * 
 	 */
-	public void removeBackOrder() {
+	public void withdrawRepairPlan() {
 		String customerID = getToken("Enter customer id");
 		String applianceID = getToken("Enter appliance id");
-		int result = library.removeBackOrder(customerID, applianceID);
+		int result = library.withdrawRepairPlan(customerID, applianceID);
 		switch (result) {
 		case Library.APPLIANCE_NOT_FOUND:
 			System.out.println("No such Appliance in Library");
@@ -365,7 +377,7 @@ public class UserInterface {
 			System.out.println("Not a valid customer ID");
 			break;
 		case Library.OPERATION_COMPLETED:
-			System.out.println("The backOrder has been removed");
+			System.out.println("The Repair Plan has been removed");
 			break;
 		default:
 			System.out.println("An error has occurred");
@@ -378,20 +390,15 @@ public class UserInterface {
 	 * appliances.
 	 * 
 	 */
-	public void processBackOrder() {
-		Customer result;
-		do {
-			String applianceID = getToken("Enter appliance id");
-			result = library.processBackOrder(applianceID);
-			if (result != null) {
-				System.out.println(result);
-			} else {
-				System.out.println("No valid backOrders left");
-			}
-			if (!yesOrNo("Process more appliances?")) {
-				break;
-			}
-		} while (true);
+	public void chargeRepairPlans() {
+		library.chargeRepairPlans();
+	}
+	
+	
+	
+	public void printRevenue() {
+		System.out.println("Revenue of all sales = " + library.printAllSales());
+		System.out.println("Revenue of all repair plans = " + library.printAllSalesRepairPlans()); 
 	}
 
 	/**
@@ -466,7 +473,7 @@ public class UserInterface {
 				addModel();
 				break;
 			case PURCHASE_ORDER:
-				issueOrders();
+				purchaseAppliance(); 
 				break;
 			case ADD_INVENTORY:
 				addInventory();
@@ -475,13 +482,10 @@ public class UserInterface {
 				purchaseRepairPlan();
 				break;
 			case WITHDRAW_REPAIR_PLAN:
-				String customerId = getToken("enter a customer ID");
-				String applianceID = getToken("enter an appliance ID");
-				library.withdrawRepairPlan(customerId, applianceID);
+				withdrawRepairPlan(); 
 				break;
 			case CHARGE_REPAIR_PLAN:
-				String applianceID = getToken("enter an appliance ID");
-				library.chargeRepairPlans(applianceID);
+				chargeRepairPlans(); 
 				break;
 			case PRINT_REVENUE:
 				printRevenue();
@@ -525,7 +529,7 @@ public class UserInterface {
 	private void list_Customers() {
 		// print out customers
 		System.out.println("Customer List\n-----------\n");
-		System.out.println(library.getCustomerList().toString());
+		// System.out.println(library.getCustomerList().toString());
 		
 	}
 	/**

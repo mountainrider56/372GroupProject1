@@ -24,6 +24,7 @@ public class Library implements Serializable {
 	public static final int OPERATION_COMPLETED = 7;
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_CUSTOMER = 9;
+	public static final int INVALID_APPLIANCE = 10;
 	// private static final String  = null;
 	public Catalog catalog;
 	private CustomerList customerList;
@@ -182,7 +183,7 @@ public class Library implements Serializable {
 		if (appliance.applianceType.equals("kitchenRangeType") || appliance.applianceType.equals("dishwasherType") 
 				|| appliance.applianceType.equals("refrigeratorType") || appliance.applianceType.equals("furnaceType") ) {
 			
-			return APPLIANCE_NOT_FOUND;
+			return INVALID_APPLIANCE;
 		}
 		if (appliance.getIssuer() == null) {
 			return APPLIANCE_NOT_PURCHASED;
@@ -197,7 +198,7 @@ public class Library implements Serializable {
 		customer.placeRepairPlan(repairPlan);
 		
 		
-		return ENROLL_REPAIRPLAN;
+		return OPERATION_COMPLETED;
 		
 	}
 	
@@ -213,8 +214,27 @@ public class Library implements Serializable {
 		if (appliance == null) {
 			return (APPLIANCE_NOT_FOUND);
 		}
-		repairPlanList.
-		return customer.removeRepairPlan(applianceId) ;
+		
+		Customer customerBeingCheckedInloop ; 
+		Appliance applianceBeingCheckedInloop ; 
+		for (Iterator iterator =  repairPlanList.getRepairPlans(); iterator.hasNext();) {
+			
+			RepairPlan repairPlan = (RepairPlan) iterator.next();
+			
+			customerBeingCheckedInloop = repairPlan.getCustomer();
+			applianceBeingCheckedInloop = repairPlan.getAppliance();
+			
+			// double check equal 	
+			if ((customer.getId()).equals(customerBeingCheckedInloop.getId())) {
+				if ((appliance.getId()).equals(applianceBeingCheckedInloop.getId())) {
+					customer.removeRepairPlan(applianceId);
+					repairPlanList.withdrawRepairPlan(repairPlan);
+				}
+			}
+			
+		}
+		
+		return OPERATION_COMPLETED ;
 	}
 	
 	// 
@@ -223,7 +243,7 @@ public class Library implements Serializable {
 		Customer customer; 
 		Double repairPlanCostOfAppliance; 
 		
-		for (ListIterator iterator = (ListIterator) RepairPlanList.getRepairPlans(); iterator.hasNext();) {
+		for (Iterator iterator =  repairPlanList.getRepairPlans(); iterator.hasNext();) {
 			
 			RepairPlan repairPlan = (RepairPlan) iterator.next();
 			customer = repairPlan.getCustomer();
