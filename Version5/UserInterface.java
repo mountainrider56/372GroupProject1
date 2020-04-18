@@ -26,20 +26,20 @@ public class UserInterface {
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static Library library;
 	private static final int EXIT = 0;
-	private static final int ADD_CUSTOMER = 1;
-	private static final int ADD_APPLIANCE_MODEL = 2;
-	private static final int PURCHASE_ORDER = 3;
-	private static final int PURCHASE_REPAIR_PLAN = 4;
-
-	private static final int PLACE_BACKORDER = 7;
-	private static final int REMOVE_BACKORDER = 8;
-	private static final int PROCESS_BACKORDER = 9;
-	private static final int GET_TRANSACTIONS = 10;
-	private static final int SAVE = 11;
-	private static final int HELP = 16;
-	private static final int LIST_CUSTOMERS = 13;
-	private static final int LIST_REPAIR_PLANS = 14;
-	private static final int LIST_APPILANCES = 15;
+	private static final int ADD_APPLIANCE_MODEL = 1;
+	private static final int ADD_CUSTOMER = 2;
+	private static final int ADD_INVENTORY = 3;
+	private static final int PURCHASE_ORDER = 4;
+	private static final int ENROLL_REPAIR_PLAN = 5;
+	private static final int WITHDRAW_REPAIR_PLAN = 6;
+	private static final int CHARGE_REPAIR_PLAN = 7;
+	private static final int PRINT_REVENUE = 8;
+	private static final int LIST_APPLIANCES = 9;
+	private static final int LIST_CUSTOMERS_WITH_REPAIR_PLANS = 10;
+	private static final int LIST_CUSTOMERS = 11;
+	private static final int LIST_BACKORDERS = 12;
+	private static final int SAVE = 13;
+	private static final int HELP = 14;
 	
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.

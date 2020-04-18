@@ -2,11 +2,13 @@ public class RepairPlan {
 
 	private Customer customer;
 	private Appliance appliance;
+	private double balance ; 
 	
 	public RepairPlan(Customer customer, Appliance appliance) {
 
 		this.customer = customer;
 		this.appliance = appliance;
+		this.balance = 0 ; 
 	}
 
 	public Customer getCustomer() {
@@ -20,6 +22,13 @@ public class RepairPlan {
 	}
 	public void setAppliance(Appliance appliance) {
 		this.appliance = appliance;
+	}
+	
+	public double getBalance() {
+		return balance;
+	}
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 	
 }

@@ -40,7 +40,7 @@ public class Appliance implements Serializable {
 	 * @param id     appliance id
 	 */
 	
-	//                                                     
+                                                   
 	public Appliance(String brandName, String modelName, double price) {
 		this.brandName = brandName;
 		this.modelName = modelName;

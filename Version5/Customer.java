@@ -67,6 +67,21 @@ public class Customer implements Serializable {
 		appliancesOnRepairPlanList.add(repairPlan);
 	}
 	
+	/**
+	 * Removes a RepairPlan
+
+	 */
+	public boolean removeRepairPlan(String applianceId) {
+		for (ListIterator iterator = appliancesOnRepairPlanList.listIterator(); iterator.hasNext();) {
+			RepairPlan repairPlan = (RepairPlan) iterator.next();
+			String id = repairPlan.getAppliance().getId();
+			if (id.equals(applianceId)) {
+				iterator.remove();
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Marks the appliance as not issued to the customer

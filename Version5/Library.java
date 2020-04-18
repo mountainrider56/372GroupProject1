@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Library implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,9 +24,10 @@ public class Library implements Serializable {
 	public static final int OPERATION_COMPLETED = 7;
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_CUSTOMER = 9;
+	private static final String  = null;
 	private Catalog catalog;
 	private CustomerList customerList;
-	private RepairPlanList repairPlanlist; 
+	private RepairPlanList repairPlanList; 
 	private static Library library;
 	private double allSales ; 
 	private double allSalesRepairPlans ; 
@@ -37,7 +39,7 @@ public class Library implements Serializable {
 	private Library() {
 		catalog = Catalog.instance();
 		customerList = CustomerList.instance();
-		repairPlanlist = repairPlanlist.instance();
+		repairPlanList = repairPlanList.instance();
 	}
 
 	/**
@@ -191,7 +193,9 @@ public class Library implements Serializable {
 		}
 		
 		RepairPlan repairPlan = new RepairPlan(customer, appliance);
+		repairPlanList.insertRepairPlan(repairPlan); 
 		customer.placeRepairPlan(repairPlan);
+		
 		
 		return ENROLL_REPAIRPLAN;
 		
@@ -209,8 +213,36 @@ public class Library implements Serializable {
 		if (appliance == null) {
 			return (APPLIANCE_NOT_FOUND);
 		}
-		return customer.removeRepairPlan(applianceId) && appliance.removeRepairPlan(customerId) ? OPERATION_COMPLETED : NO_BACKORDER_FOUND;
+		repairPlanList.
+		return customer.removeRepairPlan(applianceId) ;
 	}
+	
+	// 
+	public void chargeRepairPlans() {
+		Appliance appliance; 
+		
+		
+
+
+		
+		for (ListIterator iterator = repairPlanList.listIterator(); iterator.hasNext();) {
+			
+			
+		}
+//			
+//			
+//			RepairPlan repairPlan = (RepairPlan) iterator.next();
+//			appliance = repairPlan.getAppliance(); 
+//			String id = repairPlan.getAppliance().getId();
+//			if (id.equals(applianceId)) {
+//				iterator.remove();
+//				return true;
+//			}
+//		}
+//		return false;
+	}
+		
+	
 	
 	
 	/**
@@ -370,7 +402,7 @@ public class Library implements Serializable {
 
 		} else {
 			int backOrderQuantity = quantity - appliance.stock ;
-			appliance.stock = 0; 
+			
 			 
 			if(customer.issue(appliance,appliance.stock)) {
 				for (int i = 0 ; i < backOrderQuantity ; i++) {
