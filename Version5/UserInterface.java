@@ -183,15 +183,15 @@ public class UserInterface {
 	public void help() {
 		System.out.println("Enter a number between 0 and 13 as explained below:");
 		System.out.println(EXIT + " to Exit\n");
-		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
 		System.out.println(ADD_CUSTOMER + " to add a Customer");
+		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
 		System.out.println(PURCHASE_ORDER + " to  purchase order to a  customer");
-		System.out.println(ENROLL_REPAIR_PLAN + " to  enroll in a repair plan");
-		System.out.println(WITHDRAW_REPAIR_PLAN + " to  withdraw from repair plan");
-		System.out.println(CHARGE_REPAIR_PLAN + " to  charge repair plan");
-		System.out.println(PRINT_REVENUE + " to  print revenue");
-		System.out.println(LIST_APPLIANCES + " to  list appliances");
-		System.out.println(LIST_CUSTOMERS_WITH_REPAIR_PLANS + " to print customers with a repair plan");
+		System.out.println(ENROLL_REPAIR_PLAN + " to  purchase a repair plan");
+		System.out.println(WITHDRAW_REPAIR_PLAN + " to  place a backorder on an appliance");
+		System.out.println(CHARGE_REPAIR_PLAN + " to  remove a backorder on an appliance");
+		System.out.println(PRINT_REVENUE + " to  process backorder");
+		System.out.println(LIST_APPLIANCES + " to  print transactions");
+		System.out.println(LIST_CUSTOMERS_WITH_REPAIR_PLANS + "to print customers with a repair plan");
 		System.out.println(LIST_CUSTOMERS + " to list customers");
 		System.out.println(LIST_BACKORDERS + " to list customers");
 		System.out.println(SAVE + " to  save data");
@@ -500,7 +500,7 @@ public class UserInterface {
 				list_Customers();
 				break;
 			case LIST_BACKORDERS:
-				
+				System.out.println("list Back Orders");
 				break;
 			case SAVE:
 				save();
@@ -518,7 +518,7 @@ public class UserInterface {
 		// TODO Auto-generated method stub
 		System.out.println("Appliance List\n-----------\n");
 		System.out.println(library.catalog.toString());
-		//System.out.println(library.genericApplinaceList.toString());
+		
 	}
 
 	private void list_Repair_Plans() {
@@ -529,7 +529,7 @@ public class UserInterface {
 	private void list_Customers() {
 		// print out customers
 		System.out.println("Customer List\n-----------\n");
-		// System.out.println(library.getCustomerList().toString());
+		System.out.println(library.getCustomerList().toString());
 		
 	}
 	/**
