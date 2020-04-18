@@ -33,8 +33,6 @@ public class Library implements Serializable {
 	private double allSales = 0.0 ; 
 	private double allSalesRepairPlans = 0.0; 
 
-	
-
 	/**
 	 * Private for the singleton pattern Creates the catalog and customer collection
 	 * objects
@@ -552,11 +550,5 @@ public class Library implements Serializable {
 	@Override
 	public String toString() {
 		return catalog + "\n" + customerList;
-	}
-
-	// For Use Case - List All Customers
-	public CustomerList getCustomerList() {
-		// TODO Auto-generated method stub
-		return customerList;
 	}
 }
