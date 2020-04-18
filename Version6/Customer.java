@@ -231,19 +231,29 @@ public class Customer implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String string = "Customer name " + name + " id " + id + " phone# " + phone;
-		string += " purchased: [";
+		String string = "Customer name : " + name + " -- id " + id + " -- phone# " + phone;
+		string += "\n";
+		string += "purchased(Brand Name : Model Name (applianceId)): [";
 		for (Iterator iterator = appliancesIssued.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
 			string += " " + appliance.getBrandName();
+			string += " : " + appliance.getModelName();
+			string += " ( " + appliance.getId() + " ) ";
+			string += " , ";
 		}
-		string += "] ----- backOrders: [";
+		string += "]\n";
+		string += "backOrders(Brand Name : Model Name (applianceId)): [";
 		for (Iterator iterator = appliancesOnBackOrder.iterator(); iterator.hasNext();) {
 			BackOrder backOrder = (BackOrder) iterator.next();
 			string += " " + backOrder.getAppliance().getBrandName();
+			string += " : " + backOrder.getAppliance().getModelName();
+			string += " : " + backOrder.getAppliance().getId() + " ) ";;
+			string += " , ";
 		}
-		string += "] ----- Account Balance : " + accountBalance;
-		string += " ----- Enrolled in a service plan Status : " + accountBalance;
+		string += "]\n";
+		string += "Account Balance : " + accountBalance;
+		string += "      Enrolled in a service plan Status : " + accountBalance;
+		string += "\n";
 		string += "\n";
 		return string;
 	}
