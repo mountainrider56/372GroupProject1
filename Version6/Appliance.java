@@ -238,6 +238,6 @@ public class Appliance implements Serializable {
 	 * 
 	 */
 	public String toString() {
-		return "brandName " + brandName + " modelName " + modelName + " id " + id + " issued by " + issuedBy;
+		return "Appliance Type:" + applianceType +  " Id: " + id + "-----" + " BrandName:" + brandName + " - ModelName:" + modelName + "-----" + " price : " + price + " -- Stock:"+stock+"\n";
 	}
 }

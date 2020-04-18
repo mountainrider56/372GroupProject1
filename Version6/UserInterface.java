@@ -522,11 +522,11 @@ public class UserInterface {
 	}
 
 	private void list_Customers() {
-		// print out customers
-		System.out.println("Customer List\n-----------\n");
-		library.getCustomerList(); 
-		
-	}
+        // print out customers
+        System.out.println("Customer List\n-----------\n");
+        System.out.println(library.getCustomerList().toString()); 
+
+    }
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 

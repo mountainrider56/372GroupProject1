@@ -122,4 +122,34 @@ public class AutomatedTester {
 	
 	
 	
+	// there are 9 total customers & 12 total appliance in this test case 
+	public void purchase() {
+			
+			Random r = new Random();
+			
+			
+			// random 25 purchases 
+			for(int i=1; i < 20; i++) {
+				
+				// Generate Appliance Ids
+				String applianceId = "A"+ (r.nextInt(11)+1) ;
+				
+				// Generate Customer Ids
+				String customerId = "M"+ (r.nextInt(8)+1) ;
+				
+				// Set random quantity
+				int quantity = r.nextInt(8);
+				
+
+				
+				
+				library.purchaseAppliance(customerId, applianceId, quantity);	
+			}
+	}
+	
+	
+	
+	
+	
+	
 }

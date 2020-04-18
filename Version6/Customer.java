@@ -229,14 +229,11 @@ public class Customer implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String string = " Customer name " + name + " id " + id + " phone " + phone;
-		string += " appliancesIssued: [";
+		String string = "Customer name " + name + " id " + id + " phone# " + phone;
+		string += " borrowed: [";
 		for (Iterator iterator = appliancesIssued.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
-			string += " " + appliance.getId();
 			string += " " + appliance.getBrandName();
-			string += " " + appliance.getModelName();
-			
 		}
 		string += "] backOrders: [";
 		for (Iterator iterator = appliancesOnBackOrder.iterator(); iterator.hasNext();) {
@@ -247,7 +244,7 @@ public class Customer implements Serializable {
 		for (Iterator iterator = transactions.iterator(); iterator.hasNext();) {
 			string += (Transaction) iterator.next();
 		}
-		string += "]";
+		string += "]\n";
 		return string;
 	}
 
