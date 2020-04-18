@@ -540,6 +540,7 @@ public class UserInterface {
 	private void list_Repair_Plans() {
 		// TODO Auto-generated method stub
 		System.out.println("List of users in Repair Plans\n-----------\n");
+		System.out.println(library.getRepairPlanList().toString()); 
 	}
 
 	private void list_Customers() {

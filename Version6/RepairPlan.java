@@ -31,5 +31,15 @@ public class RepairPlan {
 //		this.balance = balance;
 //	}
 	
+	/**
+	 * String form of the appliance
+	 * 
+	 */
+	public String toString() {
+		return "Customer Name :" + customer.getName() +  ", phone : " + customer.getPhone() + ", Id : " + customer.getId() + "\n"
+				+ ", Account Balance : " + customer.getAccountBalance() 
+				+ "-----" + " Appliance Brand : " + appliance.getBrandName() + ", Model :" + appliance.getModelName() + "\n";
+	}
+	
 }
 	

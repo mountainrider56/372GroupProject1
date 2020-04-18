@@ -221,7 +221,7 @@ public class Customer implements Serializable {
 	}
 	
 	public void addToAccountBalance(double amount) {
-		accountBalance++;
+		accountBalance+= amount;
 	}
 
 
@@ -231,9 +231,9 @@ public class Customer implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String string = "Customer name : " + name + " -- id " + id + " -- phone# " + phone;
+		String string = "Customer name : " + name + " -- id : " + id + " -- phone# " + phone;
 		string += "\n";
-		string += "purchased(Brand Name : Model Name (applianceId)): [";
+		string += "purchaseIssued(Brand Name : Model Name (applianceId)): [";
 		for (Iterator iterator = appliancesIssued.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
 			string += " " + appliance.getBrandName();
@@ -247,7 +247,7 @@ public class Customer implements Serializable {
 			BackOrder backOrder = (BackOrder) iterator.next();
 			string += " " + backOrder.getAppliance().getBrandName();
 			string += " : " + backOrder.getAppliance().getModelName();
-			string += " : " + backOrder.getAppliance().getId() + " ) ";;
+			string += " ( " + backOrder.getAppliance().getId() + " ) ";;
 			string += " , ";
 		}
 		string += "]\n";

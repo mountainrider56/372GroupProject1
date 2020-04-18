@@ -297,9 +297,7 @@ public class Library implements Serializable {
 		if (appliance == null) {
 			return APPLIANCE_NOT_FOUND;
 		}
-		if (appliance.getIssuer() == null) {
-			return APPLIANCE_NOT_PURCHASED;
-		}
+
 		Customer customer = customerList.search(customerId);
 		if (customer == null) {
 			return NO_SUCH_CUSTOMER;
@@ -461,6 +459,12 @@ public class Library implements Serializable {
 		return customerList;
 	}
 	
+	// getRepairPlanList
+	
+	public RepairPlanList getRepairPlanList() {
+		// TODO Auto-generated method stub
+		return repairPlanList;
+	}
 
 	/**
 	 * Removes a specific appliance from the catalog
