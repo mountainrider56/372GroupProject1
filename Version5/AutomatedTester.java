@@ -23,20 +23,62 @@ public class AutomatedTester {
 	 * Tests Customer creation.
 	 */
 	public void test() {
-		String[] names = { "n1", "n2", "n3" };
-		String[] phones = { "p1", "p2", "p3" };
-		Customer[] customers = new Customer[3];
+		String[] names = { "n1", "n2", "n3" , "n4" , "n5" };
+		String[] phones = { "p1", "p2", "p3" , "p4", "p5" };		
+		
+		Customer[] customers = new Customer[5];
 		for (int count = 0; count < names.length; count++) {
 			customers[count] = library.addCustomer(names[count], phones[count]);
 			assert customers[count].getName().equals(names[count]);
 			assert customers[count].getPhone().equals(phones[count]);
 		}
 		
-		// Appliances
-				Appliance[] appliances = new Appliance[3];
-				String[] brandnames = {"Samsung", "LG", "MayTag"};
-				String[] modelnames = {"S1","S2","S3"};
-				String[] prices = {"555.55","333.33","223.22"};
+		// Test Add Model
+		String[] brandnames = {"B1", "B2", "B3", "B4", "B5" , "B6",};
+		String[] modelnames = {"M1" , "M2" , "M3" , "M4" , "M5"};
+		String[] prices = {"5.0","10.0","15.0", "20.0", "25.0"};
+		
+		
+		
+		// Test Add Inventory
+		
+		
+		
+		// Test purchase 
+		
+		
+		
+		// Test enroll repair plan 
+		
+		
+		// test withdraw repair plan 
+		
+		
+		
+		// test charge repair plan 
+		
+		
+		
+		// test print revenue 
+		
+		
+		
+		// test list appliances
+		
+		// test list all users in repair plans
+		
+		
+		// test list customers
+		
+		
+		// test list all backorders. 
+		
+//		Appliance[] appliances = new Appliance[5];
+//		for (int count = 0; count < names.length; count++) {
+//			customers[count] = library.addCustomer(names[count], phones[count]);
+//			assert customers[count].getName().equals(names[count]);
+//			assert customers[count].getPhone().equals(phones[count]);
+//		}
 				
 	}
 }
