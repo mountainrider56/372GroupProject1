@@ -24,6 +24,7 @@ public class AutomatedTester {
 		addFridges();
 		addFurnaces();
 		addStartingInventory();
+		purchase();
 	}
 
 	/**

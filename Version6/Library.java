@@ -185,9 +185,9 @@ public class Library implements Serializable {
 			
 			return INVALID_APPLIANCE;
 		}
-		if (appliance.getIssuer() == null) {
-			return APPLIANCE_NOT_PURCHASED;
-		}
+//		if (appliance.getIssuer() == null) {
+//			return APPLIANCE_NOT_PURCHASED;
+//		}
 		Customer customer = customerList.search(customerId);
 		if (customer == null) {
 			return NO_SUCH_CUSTOMER;

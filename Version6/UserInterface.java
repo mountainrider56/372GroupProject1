@@ -304,26 +304,7 @@ public class UserInterface {
 		} while (yesOrNo("Add more stocks for other appliances?"));	
 	}
 	
-	public void purchaseRepairPlan() {
-		System.out.println("Repair Plan Purchase\n");
-		String applianceID = getToken("Enter appliance id");
-		String customerID = getToken("Enter customer id");
-		int cost = Integer.parseInt(getToken("Enter cost"));
-		//Search for appliance
-		
-		
-		
-		//Search for the customer object
-		Customer c = library.searchCustomer(customerID);
-		if(c!=null)
-		{
-			System.out.print(c.toString());
-			// Assign the customer to repair plan
-			//RepairPlan r = new RepairPlan(cost,c,a);
-		}
-		
-		
-	}
+
 	
 
 
@@ -474,7 +455,7 @@ public class UserInterface {
 				addInventory();
 				break;
 			case ENROLL_REPAIR_PLAN:
-				purchaseRepairPlan();
+				enrollRepairPlan();
 				break;
 			case WITHDRAW_REPAIR_PLAN:
 				withdrawRepairPlan(); 
