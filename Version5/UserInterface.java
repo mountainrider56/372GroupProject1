@@ -193,7 +193,7 @@ public class UserInterface {
 		System.out.println(LIST_APPLIANCES + " to  list appliances");
 		System.out.println(LIST_CUSTOMERS_WITH_REPAIR_PLANS + " to print customers with a repair plan");
 		System.out.println(LIST_CUSTOMERS + " to list customers");
-		System.out.println(LIST_BACKORDERS + " to list customers");
+		System.out.println(LIST_BACKORDERS + " to list Backorders");
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
 	}
@@ -222,12 +222,12 @@ public class UserInterface {
 	public void addModel() {
 		Appliance result;
 		do {
-			String typeOfAppliance = getToken("Enter number of corresponding type of appliance you want to add,\n"
-					+ "1. Cloth Washer\\n"
-					+ "2. Cloth Dryer\\n"
-					+ "3. Kitchen Ranges\\n"
-					+ "4. Dish Washers\\n"
-					+ "5. Refrigerators\\n"
+			String typeOfAppliance = getToken("Enter number of corresponding type of appliance you want to add," + "\n"
+					+ "1. Cloth Washer" + "\n"
+					+ "2. Cloth Dryer" + "\n"
+					+ "3. Kitchen Ranges" + "\n"
+					+ "4. Dish Washers" + "\n"
+					+ "5. Refrigerators" + "\n"
 					+ "6. Furnances");
 			
 			String brandName = getToken("Enter the brand Name"); 
@@ -264,11 +264,6 @@ public class UserInterface {
 				System.out.println("An error has occurred");
 			}
 			
-//			if (result != null) {
-//				System.out.println(result);
-//			} else {
-//				System.out.println("Model could not be added");
-//			}
 		} while (yesOrNo("Add more Models?"));
 	}
 
@@ -529,7 +524,7 @@ public class UserInterface {
 	private void list_Customers() {
 		// print out customers
 		System.out.println("Customer List\n-----------\n");
-		// System.out.println(library.getCustomerList().toString());
+		library.getCustomerList(); 
 		
 	}
 	/**

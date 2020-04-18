@@ -83,7 +83,7 @@ public class RepairPlanList implements Serializable {
      * 
      * @return iterator to the collection
      */
-    public static Iterator getRepairPlans() {
+    public Iterator getRepairPlans() {
         return repairPlans.iterator();
     }
     

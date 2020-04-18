@@ -229,11 +229,14 @@ public class Customer implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String string = "Customer name " + name + " id " + id + "phone " + phone;
-		string += " borrowed: [";
+		String string = " Customer name " + name + " id " + id + " phone " + phone;
+		string += " appliancesIssued: [";
 		for (Iterator iterator = appliancesIssued.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
+			string += " " + appliance.getId();
 			string += " " + appliance.getBrandName();
+			string += " " + appliance.getModelName();
+			
 		}
 		string += "] backOrders: [";
 		for (Iterator iterator = appliancesOnBackOrder.iterator(); iterator.hasNext();) {

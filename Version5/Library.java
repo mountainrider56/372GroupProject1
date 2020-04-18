@@ -254,18 +254,8 @@ public class Library implements Serializable {
 			allSalesRepairPlans += repairPlanCostOfAppliance ;
 			
 			
-	}
-//			
-//			
-//			RepairPlan repairPlan = (RepairPlan) iterator.next();
-//			appliance = repairPlan.getAppliance(); 
-//			String id = repairPlan.getAppliance().getId();
-//			if (id.equals(applianceId)) {
-//				iterator.remove();
-//				return true;
-//			}
-//		}
-//		return false;
+		}
+
 	}
 		
 	
@@ -465,6 +455,12 @@ public class Library implements Serializable {
 			return (customer.getAppliancesIssued());
 		}
 	}
+	
+	public CustomerList getCustomerList() {
+		// TODO Auto-generated method stub
+		return customerList;
+	}
+	
 
 	/**
 	 * Removes a specific appliance from the catalog
