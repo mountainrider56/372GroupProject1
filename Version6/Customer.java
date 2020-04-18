@@ -23,6 +23,8 @@ public class Customer implements Serializable {
 	private List appliancesOnRepairPlanList = new LinkedList(); 
 	
 	private double accountBalance ; 
+	
+	private boolean enrolledInRepairPlanStatus ; 
 
 	/**
 	 * Represents a single customer
@@ -230,25 +232,23 @@ public class Customer implements Serializable {
 	@Override
 	public String toString() {
 		String string = "Customer name " + name + " id " + id + " phone# " + phone;
-		string += " borrowed: [";
+		string += " purchased: [";
 		for (Iterator iterator = appliancesIssued.iterator(); iterator.hasNext();) {
 			Appliance appliance = (Appliance) iterator.next();
 			string += " " + appliance.getBrandName();
 		}
-		string += "] backOrders: [";
+		string += "] ----- backOrders: [";
 		for (Iterator iterator = appliancesOnBackOrder.iterator(); iterator.hasNext();) {
 			BackOrder backOrder = (BackOrder) iterator.next();
 			string += " " + backOrder.getAppliance().getBrandName();
 		}
-		string += "] transactions: [";
-		for (Iterator iterator = transactions.iterator(); iterator.hasNext();) {
-			string += (Transaction) iterator.next();
-		}
-		string += "]\n";
+		string += "] ----- Account Balance : " + accountBalance;
+		string += " ----- Enrolled in a service plan Status : " + accountBalance;
+		string += "\n";
 		return string;
 	}
 
-	@Override
+	@Override 
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
