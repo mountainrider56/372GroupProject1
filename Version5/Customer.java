@@ -21,6 +21,8 @@ public class Customer implements Serializable {
 	private List transactions = new LinkedList();
 	
 	private List appliancesOnRepairPlanList = new LinkedList(); 
+	
+	private double accountBalance ; 
 
 	/**
 	 * Represents a single customer
@@ -31,6 +33,7 @@ public class Customer implements Serializable {
 	public Customer(String name, String phone) {
 		this.name = name;
 		this.phone = phone;
+		accountBalance = 0.0; 
 		id = CUSTOMER_STRING + (CustomerIdServer.instance()).getId();
 	}
 
@@ -180,6 +183,10 @@ public class Customer implements Serializable {
 	public String getPhone() {
 		return phone;
 	}
+	
+	public double getAccountBalance() {
+		return accountBalance; 
+	}
 
 
 	/**
@@ -210,6 +217,11 @@ public class Customer implements Serializable {
 	public void setPhone(String newPhone) {
 		phone = newPhone;
 	}
+	
+	public void addToAccountBalance(double amount) {
+		accountBalance++;
+	}
+
 
 	/**
 	 * String form of the customer

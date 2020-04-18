@@ -1,4 +1,3 @@
-
 /**
  * 
  * @modelName 
@@ -175,16 +174,16 @@ public class UserInterface {
 		System.out.println(ADD_CUSTOMER + " to add a Customer");
 		System.out.println(ADD_APPLIANCE_MODEL + " to  add Appliance Model");
 		System.out.println(PURCHASE_ORDER + " to  purchase order to a  customer");
-		System.out.println(PURCHASE_REPAIR_PLAN + " to  purchase a repair plan");
-		System.out.println(PLACE_BACKORDER + " to  place a backorder on an appliance");
-		System.out.println(REMOVE_BACKORDER + " to  remove a backorder on an appliance");
-		System.out.println(PROCESS_BACKORDER + " to  process backorder");
-		System.out.println(GET_TRANSACTIONS + " to  print transactions");
+		System.out.println(ENROLL_REPAIR_PLAN + " to  purchase a repair plan");
+		System.out.println(WITHDRAW_REPAIR_PLAN + " to  place a backorder on an appliance");
+		System.out.println(CHARGE_REPAIR_PLAN + " to  remove a backorder on an appliance");
+		System.out.println(PRINT_REVENUE + " to  process backorder");
+		System.out.println(LIST_APPLIANCES + " to  print transactions");
+		System.out.println(LIST_CUSTOMERS_WITH_REPAIR_PLANS + "to print customers with a repair plan");
+		System.out.println(LIST_CUSTOMERS + " to list customers");
+		System.out.println(LIST_BACKORDERS + " to list customers");
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
-		System.out.println(LIST_CUSTOMERS + " to list customers");
-		System.out.println(LIST_REPAIR_PLANS + " to list all users in a repair plan");
-		System.out.println(LIST_APPILANCES + " to list appliances");
 	}
 
 	/**
@@ -467,23 +466,37 @@ public class UserInterface {
 				addModel();
 				break;
 			case PURCHASE_ORDER:
-				purchaseOrders();
+				issueOrders();
 				break;
-			case PURCHASE_REPAIR_PLAN:
+			case ADD_INVENTORY:
+				addInventory();
+				break;
+			case ENROLL_REPAIR_PLAN:
 				purchaseRepairPlan();
 				break;
-
-			case PLACE_BACKORDER:
-				placeBackOrder();
+			case WITHDRAW_REPAIR_PLAN:
+				String customerId = getToken("enter a customer ID");
+				String applianceID = getToken("enter an appliance ID");
+				library.withdrawRepairPlan(customerId, applianceID);
 				break;
-			case REMOVE_BACKORDER:
-				removeBackOrder();
+			case CHARGE_REPAIR_PLAN:
+				String applianceID = getToken("enter an appliance ID");
+				library.chargeRepairPlans(applianceID);
 				break;
-			case PROCESS_BACKORDER:
-				processBackOrder();
+			case PRINT_REVENUE:
+				printRevenue();
 				break;
-			case GET_TRANSACTIONS:
-				getTransactions();
+			case LIST_APPLIANCES:
+				list_appliances();
+				break;
+			case LIST_CUSTOMERS_WITH_REPAIR_PLANS:
+				list_Repair_Plans();
+				break;
+			case LIST_CUSTOMERS:
+				list_Customers();
+				break;
+			case LIST_BACKORDERS:
+				
 				break;
 			case SAVE:
 				save();
@@ -492,16 +505,7 @@ public class UserInterface {
 				help();
 				break;
 			
-			case LIST_CUSTOMERS:
-				list_Customers();
-				break;
-			case LIST_REPAIR_PLANS:
-				list_Repair_Plans();
-				break;
-				
-			case LIST_APPILANCES:
-				list_appliances();
-				break;
+			
 			}
 		}
 	}

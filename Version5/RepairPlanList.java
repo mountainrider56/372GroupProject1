@@ -11,7 +11,7 @@ import java.util.ListIterator;
  */
 public class RepairPlanList implements Serializable {
     private static final long serialVersionUID = 1L;
-    private List repairPlans = new LinkedList();
+    private static List repairPlans = new LinkedList();
     private static RepairPlanList repairPlanList;
 
     /*
@@ -42,15 +42,15 @@ public class RepairPlanList implements Serializable {
      * @return true iff repairPlan exists
      * 
      */
-    public RepairPlan search(String repairPlanId) {
-        for (Iterator iterator = repairPlans.iterator(); iterator.hasNext();) {
-            RepairPlan repairPlan = (RepairPlan) iterator.next();
-            if (repairPlan.getId().equals(repairPlanId)) {
-                return repairPlan;
-            }
-        }
-        return null;
-    }
+//    public RepairPlan search(RepairPlan repairPlan) {
+//        for (Iterator iterator = repairPlans.iterator(); iterator.hasNext();) {
+//            RepairPlan repairPlan = (RepairPlan) iterator.next();
+//            if (repairPlan.getId().equals(repairPlanId)) {
+//                return repairPlan;
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Inserts a repairPlan into the collection
@@ -83,6 +83,14 @@ public class RepairPlanList implements Serializable {
         }
     }
     
+    /**
+     * Returns an iterator to all appliances
+     * 
+     * @return iterator to the collection
+     */
+    public static Iterator getRepairPlans() {
+        return repairPlans.iterator();
+    }
     
 
     /**

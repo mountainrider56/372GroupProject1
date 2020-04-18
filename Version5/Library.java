@@ -24,13 +24,13 @@ public class Library implements Serializable {
 	public static final int OPERATION_COMPLETED = 7;
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_CUSTOMER = 9;
-	private static final String  = null;
-	private Catalog catalog;
+	// private static final String  = null;
+	public Catalog catalog;
 	private CustomerList customerList;
 	private RepairPlanList repairPlanList; 
 	private static Library library;
-	private double allSales ; 
-	private double allSalesRepairPlans ; 
+	private double allSales = 0.0 ; 
+	private double allSalesRepairPlans = 0.0; 
 
 	/**
 	 * Private for the singleton pattern Creates the catalog and customer collection
@@ -220,15 +220,21 @@ public class Library implements Serializable {
 	// 
 	public void chargeRepairPlans() {
 		Appliance appliance; 
+		Customer customer; 
+		Double repairPlanCostOfAppliance; 
 		
-		
-
-
-		
-		for (ListIterator iterator = repairPlanList.listIterator(); iterator.hasNext();) {
+		for (ListIterator iterator = (ListIterator) RepairPlanList.getRepairPlans(); iterator.hasNext();) {
+			
+			RepairPlan repairPlan = (RepairPlan) iterator.next();
+			customer = repairPlan.getCustomer();
+			appliance = repairPlan.getAppliance();
+			
+			repairPlanCostOfAppliance = appliance.monthlyRepairPlanCost ; 
+			customer.addToAccountBalance(repairPlanCostOfAppliance);
+			allSalesRepairPlans += repairPlanCostOfAppliance ;
 			
 			
-		}
+	}
 //			
 //			
 //			RepairPlan repairPlan = (RepairPlan) iterator.next();
@@ -243,7 +249,13 @@ public class Library implements Serializable {
 	}
 		
 	
+	public double printAllSales() {
+		return allSales  ; 
+	}
 	
+	public double printAllSalesRepairPlans() {
+		return allSalesRepairPlans ; 
+	}
 	
 	/**
 	 * Based on processBackOrder
