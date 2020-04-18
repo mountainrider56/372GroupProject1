@@ -25,7 +25,10 @@ public class Library implements Serializable {
 	public static final int NO_SUCH_CUSTOMER = 9;
 	private Catalog catalog;
 	private CustomerList customerList;
+	private RepairPlanList repairPlanlist; 
 	private static Library library;
+	private double allSales ; 
+	private double allSalesRepairPlans ; 
 
 	/**
 	 * Private for the singleton pattern Creates the catalog and customer collection
@@ -34,6 +37,7 @@ public class Library implements Serializable {
 	private Library() {
 		catalog = Catalog.instance();
 		customerList = CustomerList.instance();
+		repairPlanlist = repairPlanlist.instance();
 	}
 
 	/**
@@ -58,41 +62,47 @@ public class Library implements Serializable {
 	 * @param id     appliance id
 	 * @return the Appliance object created
 	 */
-	public Appliance addModel( String typeOfAppliance, String price, String brandName, String modelName,
-		String monthlyRepairPlanCost, String capacity, String heatOutput) {
+	public Appliance addModel( String typeOfAppliance, double price, String brandName, String modelName,
+		double monthlyRepairPlanCost, double capacity, double heatOutput) {
 
 		switch(typeOfAppliance) {
 		
 			case "1" : 
 				Washer washer = new Washer(brandName, modelName, price, monthlyRepairPlanCost);
+				washer.applianceType = "washerType";
 				catalog.insertAppliance(washer); 
 				break;
 				
 			case "2" : 
 				Dryer dryer = new Dryer(brandName, modelName, price, monthlyRepairPlanCost);
+				dryer.applianceType = "dryerType";
 				catalog.insertAppliance(dryer); 
 				break;
 				
 			// kitchen range and dish washers
 			case "3" : 
 				KitchenRange kitchenRange = new KitchenRange(brandName, modelName, price);
+				kitchenRange.applianceType = "kitchenRangeType";
 				catalog.insertAppliance(kitchenRange);
 				break;
 			
 			case "4" :  
 				DishWasher dishwasher = new DishWasher(brandName, modelName, price);
+				dishwasher.applianceType = "dishwasherType";
 				catalog.insertAppliance(dishwasher);
 				break;
 			
 			// refrigerators
 			case "5" : 
 				Refrigerator refrigerator = new Refrigerator(brandName, modelName, price, capacity);
+				refrigerator.applianceType = "refrigeratorType"; 
 				catalog.insertAppliance(refrigerator);
 				break;
 			
 			// furnaces 
 			case "6" : 
 				Furnace furnace = new Furnace(brandName, modelName, price, heatOutput);
+				furnace.applianceType = "furnaceType";
 				catalog.insertAppliance(furnace);
 				break;
 			
@@ -122,11 +132,102 @@ public class Library implements Serializable {
 		return null;
 	}
 	
-	public void addInventory(String applianceId, double quantity) {
+	/**
+	 * Searches for a given customer
+	 * 
+	 * @param customerId id of the customer
+	 * @return true iff the customer is in the customer list collection
+	 */
+	public Customer searchCustomer(String customerId) {
+		return customerList.search(customerId);
+	}
+	
+	
+	public void addInventory(String applianceId, int quantity) {
 		Appliance appliance; 
+		Customer customer ; 
+		
 		
 		appliance = catalog.search(applianceId);
-		appliance.stock = quantity; 
+		
+		int j = quantity ; 
+		for (int i = 0 ; i < j ; i++) {
+			customer = processBackOrder(applianceId); 
+			if (customer == null) {
+				break; 
+			}
+			quantity--;
+		}
+		
+		appliance.stock += quantity;
+	}
+	
+	// type - "all" or refrigeratorType etc. 
+	public void listAppliance(String type) {
+		
+
+	}
+	
+	/**
+	 * Enroll Repair Plan 
+	 * based on placeBackOrder
+	 */
+	public int enrollRepairPlan(String customerId, String applianceId) {
+		Appliance appliance = catalog.search(applianceId);
+		if (appliance == null) {
+			return APPLIANCE_NOT_FOUND;
+		}
+		if (appliance.applianceType.equals("kitchenRangeType") || appliance.applianceType.equals("dishwasherType") 
+				|| appliance.applianceType.equals("refrigeratorType") || appliance.applianceType.equals("furnaceType") ) {
+			
+			return APPLIANCE_NOT_FOUND;
+		}
+		if (appliance.getIssuer() == null) {
+			return APPLIANCE_NOT_PURCHASED;
+		}
+		Customer customer = customerList.search(customerId);
+		if (customer == null) {
+			return NO_SUCH_CUSTOMER;
+		}
+		
+		RepairPlan repairPlan = new RepairPlan(customer, appliance);
+		customer.placeRepairPlan(repairPlan);
+		
+		return ENROLL_REPAIRPLAN;
+		
+	}
+	
+	/**
+	 * based on removeBackOrder
+	 */
+	public int withdrawRepairPlan(String customerId, String applianceId) {
+		Customer customer = customerList.search(customerId);
+		if (customer == null) {
+			return (NO_SUCH_CUSTOMER);
+		}
+		Appliance appliance = catalog.search(applianceId);
+		if (appliance == null) {
+			return (APPLIANCE_NOT_FOUND);
+		}
+		return customer.removeRepairPlan(applianceId) && appliance.removeRepairPlan(customerId) ? OPERATION_COMPLETED : NO_BACKORDER_FOUND;
+	}
+	
+	
+	/**
+	 * Based on processBackOrder
+	 */
+	public Customer chargeRepairPlans(String applianceId) {
+		Appliance appliance = catalog.search(applianceId);
+		if (appliance == null) {
+			return null;
+		}
+		BackOrder backOrder = appliance.getNextBackOrder();
+		if (backOrder == null) {
+			return null;
+		}
+		backOrder.getCustomer().removeBackOrder(applianceId);
+		backOrder.getAppliance().removeBackOrder(backOrder.getCustomer().getId());
+		return backOrder.getCustomer();
 	}
 
 	/**
@@ -137,7 +238,7 @@ public class Library implements Serializable {
 	 * @param duration for how long the backOrder should be valid in days
 	 * @return indication on the outcome
 	 */
-	public int placeBackOrder(String customerId, String applianceId, int duration) {
+	public int placeBackOrder(String customerId, String applianceId) {
 		Appliance appliance = catalog.search(applianceId);
 		if (appliance == null) {
 			return APPLIANCE_NOT_FOUND;
@@ -149,21 +250,14 @@ public class Library implements Serializable {
 		if (customer == null) {
 			return NO_SUCH_CUSTOMER;
 		}
-		BackOrder backOrder = new BackOrder(customer, appliance, duration);
+		BackOrder backOrder = new BackOrder(customer, appliance);
 		appliance.placeBackOrder(backOrder);
 		customer.placeBackOrder(backOrder);
 		return BACKORDER_PLACED;
 	}
+	
 
-	/**
-	 * Searches for a given customer
-	 * 
-	 * @param customerId id of the customer
-	 * @return true iff the customer is in the customer list collection
-	 */
-	public Customer searchCustomer(String customerId) {
-		return customerList.search(customerId);
-	}
+
 
 	/**
 	 * Processes backOrders for a single appliance
@@ -204,20 +298,20 @@ public class Library implements Serializable {
 		return customer.removeBackOrder(applianceId) && appliance.removeBackOrder(customerId) ? OPERATION_COMPLETED : NO_BACKORDER_FOUND;
 	}
 
-	/*
-	 * Removes all out-of-date backOrders
-	 */
-	private void removeInvalidBackOrders() {
-		for (Iterator catalogIterator = catalog.getAppliances(); catalogIterator.hasNext();) {
-			for (Iterator iterator = ((Appliance) catalogIterator.next()).getBackOrders(); iterator.hasNext();) {
-				BackOrder backOrder = (BackOrder) iterator.next();
-				if (!backOrder.isValid()) {
-					backOrder.getAppliance().removeBackOrder(backOrder.getCustomer().getId());
-					backOrder.getCustomer().removeBackOrder(backOrder.getAppliance().getId());
-				}
-			}
-		}
-	}
+//	/*
+//	 * Removes all out-of-date backOrders
+//	 */
+//	private void removeInvalidBackOrders() {
+//		for (Iterator catalogIterator = catalog.getAppliances(); catalogIterator.hasNext();) {
+//			for (Iterator iterator = ((Appliance) catalogIterator.next()).getBackOrders(); iterator.hasNext();) {
+//				BackOrder backOrder = (BackOrder) iterator.next();
+//				if (!backOrder.isValid()) {
+//					backOrder.getAppliance().removeBackOrder(backOrder.getCustomer().getId());
+//					backOrder.getCustomer().removeBackOrder(backOrder.getAppliance().getId());
+//				}
+//			}
+//		}
+//	}
 
 	/**
 	 * Organizes the issuing of a appliance
@@ -251,7 +345,7 @@ public class Library implements Serializable {
 	 * @param applianceId   appliance id
 	 * @return the appliance issued
 	 */
-	public Appliance purchaseAppliance(String customerId, String applianceId, double quantity) {
+	public Appliance purchaseAppliance(String customerId, String applianceId, int quantity) {
 		Appliance appliance = catalog.search(applianceId);
 		if (appliance == null) {
 			return (null);
@@ -264,10 +358,29 @@ public class Library implements Serializable {
 		
 		if (quantity <= appliance.stock) {
 			appliance.stock -= quantity; 
-			customer.issue(appliance,quantity); 
-		} else {
+			if (customer.issue(appliance,quantity)) {
+				allSales += appliance.price * quantity ; 
+			}
+		} else if ((appliance.applianceType).equals("furnaceType")) {
+			System.out.print("There's no back order for furnace so could only purchase " + appliance.stock + " furnaces, which were in stock");
 			appliance.stock = 0; 
-			customer.issue(appliance,quantity); 
+			if (customer.issue(appliance,appliance.stock)) {
+				allSales += appliance.price * appliance.stock ;
+			}
+
+		} else {
+			int backOrderQuantity = quantity - appliance.stock ;
+			appliance.stock = 0; 
+			 
+			if(customer.issue(appliance,appliance.stock)) {
+				for (int i = 0 ; i < backOrderQuantity ; i++) {
+					placeBackOrder(customerId, applianceId);
+				}
+				
+				// Do all sales include backorders too ? 
+				allSales += appliance.price * quantity ;
+			}
+			
 		}
 		
 		return (appliance);

@@ -67,6 +67,10 @@ public class ApplianceList implements Serializable {
         appliances.add(appliance);
         return true;
     }
+    
+    public static ApplianceList getApplianceList() {
+		return applianceList;
+	}
 
     /**
      * String form of the collection

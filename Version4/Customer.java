@@ -19,6 +19,8 @@ public class Customer implements Serializable {
 	private List appliancesIssued = new LinkedList();
 	private List appliancesOnBackOrder = new LinkedList();
 	private List transactions = new LinkedList();
+	
+	private List appliancesOnRepairPlanList = new LinkedList(); 
 
 	/**
 	 * Represents a single customer
@@ -45,6 +47,26 @@ public class Customer implements Serializable {
 		}
 		return false;
 	}
+	
+	/**
+	 * add appliance to repair plan list 
+	 */
+	public boolean addApplianceToRepairPlanList(RepairPlan repairPlan) {
+		if (appliancesOnRepairPlanList.add(repairPlan)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Places a backOrder for the appliance
+	 * 
+	 * @param backOrder the appliance to be placed a backOrder
+	 */
+	public void placeRepairPlan(RepairPlan repairPlan) {
+		appliancesOnRepairPlanList.add(repairPlan);
+	}
+	
 
 	/**
 	 * Marks the appliance as not issued to the customer
@@ -69,6 +91,16 @@ public class Customer implements Serializable {
 	public Iterator getAppliancesIssued() {
 		return (appliancesIssued.listIterator());
 	}
+	
+	/**
+	 * Gets an iterator to the issued appliances
+	 * 
+	 * @return Iterator to the collection of issued appliances
+	 */
+	public Iterator getAppliancesOnRepairPlanList() {
+		return (appliancesOnRepairPlanList.listIterator());
+	}
+	
 
 	/**
 	 * Places a backOrder for the appliance

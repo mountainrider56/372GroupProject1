@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
 public class BackOrder implements Serializable {
     private Appliance appliance;
     private Customer customer;
-    private Calendar date;
+
 
     /**
      * The customer and appliance are stored. The date is computed by adding the
@@ -44,11 +44,10 @@ public class BackOrder implements Serializable {
      * @param duration
      *            for how long the backOrder is valid
      */
-    public BackOrder(Customer customer, Appliance appliance, int duration) {
+    public BackOrder(Customer customer, Appliance appliance) {
         this.appliance = appliance;
         this.customer = customer;
-        date = new GregorianCalendar();
-        date.add(Calendar.DATE, duration);
+      
     }
 
     /**
@@ -68,23 +67,8 @@ public class BackOrder implements Serializable {
     public Appliance getAppliance() {
         return appliance;
     }
+    
+ 
 
-    /**
-     * Getter for date
-     * 
-     * @return date until which the backOrder is valid
-     */
-    public Calendar getDate() {
-        return date;
-    }
 
-    /**
-     * Checks whether the backOrder has become invalid because the last date has
-     * passed
-     * 
-     * @return true iff the backOrder is valid
-     */
-    public boolean isValid() {
-        return (System.currentTimeMillis() < date.getTimeInMillis());
-    }
 }

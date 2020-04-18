@@ -31,5 +31,15 @@ public class AutomatedTester {
 			assert customers[count].getName().equals(names[count]);
 			assert customers[count].getPhone().equals(phones[count]);
 		}
+		
+		// Appliances
+				Appliance[] appliances = new Appliance[3];
+				String[] brandnames = {"Samsung", "LG", "MayTag"};
+				String[] modelnames = {"S1","S2","S3"};
+				String[] prices = {"555.55","333.33","223.22"};
+				for (int count = 0; count < brandnames.length; count++) {
+					appliances[count] = library.addModel("1", prices[count], brandnames[count],
+							modelnames[count], "0", "0", "0");
+				}
 	}
 }

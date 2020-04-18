@@ -23,12 +23,14 @@ public class Appliance implements Serializable {
 	private String modelName;
 	private static final String APPLIANCE_STRING = "A";
 	private String id;
-	public double stock;
+	public int stock;
 	private Customer issuedBy;
 	private List backOrders = new LinkedList();
 	private Calendar dueDate;
-	private double price ; 
+	public double price ; 
+	public String applianceType; 
 	
+	public double monthlyRepairPlanCost ;
 
 	/**
 	 * Creates a appliance with the given id, brandName, and modelName name
@@ -43,7 +45,7 @@ public class Appliance implements Serializable {
 		this.brandName = brandName;
 		this.modelName = modelName;
 		this.price = price;
-		this.stock = 0.0;
+		this.stock = 0;
 		id = APPLIANCE_STRING + (ApplianceIdServer.instance()).getId();
 	}
 
@@ -129,9 +131,7 @@ public class Appliance implements Serializable {
 		for (ListIterator iterator = backOrders.listIterator(); iterator.hasNext();) {
 			BackOrder backOrder = (BackOrder) iterator.next();
 			iterator.remove();
-			if (backOrder.isValid()) {
-				return backOrder;
-			}
+			return backOrder;	
 		}
 		return null;
 	}
