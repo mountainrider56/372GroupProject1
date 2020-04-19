@@ -1,7 +1,7 @@
 
 import java.io.Serializable;
 
-public class RepairPlan {
+public class RepairPlan implements Serializable   {
 
 	private Customer customer;
 	private Appliance appliance;
