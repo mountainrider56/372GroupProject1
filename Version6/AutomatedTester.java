@@ -25,6 +25,9 @@ public class AutomatedTester {
 		addFurnaces();
 		addStartingInventory();
 		purchase();
+		
+		// Randomly pick 4 customers and give repair plans to them.
+		enrollCustomersToRepairPlan(4);
 	}
 
 	/**
@@ -133,10 +136,10 @@ public class AutomatedTester {
 			for(int i=1; i < 20; i++) {
 				
 				// Generate Appliance Ids
-				String applianceId = "A"+ (r.nextInt(11)+1) ;
+				String applianceId = "A"+ (r.nextInt(12)+1) ;
 				
 				// Generate Customer Ids
-				String customerId = "M"+ (r.nextInt(8)+1) ;
+				String customerId = "M"+ (r.nextInt(9)+1) ;
 				
 				// Set random quantity
 				int quantity = r.nextInt(8);
@@ -148,6 +151,44 @@ public class AutomatedTester {
 			}
 	}
 	
+	// Randomly pick 2 customers and give repair plans to them.
+    public void addCustomersToEnrollmentplans() {
+
+        Random r = new Random();
+
+        // give random 3 repair plans
+        String c1 = "M"+(r.nextInt(9)+1) ;
+        String c2 = "M"+(r.nextInt(9)+1) ;
+        String c3 = "M"+(r.nextInt(9)+1) ;
+        String[] customerIDs = {c1,c2,c3};
+        String[] applianceIDsWithRepairPlans = {"A1", "A3", "A5"};
+
+
+        for(int i=0; i<customerIDs.length;i++)
+        {
+            library.enrollRepairPlan(customerIDs[i], applianceIDsWithRepairPlans[i]);
+
+        }
+    }
+	
+    
+    // Randomly picks customers and give repair plans to them.
+    public void enrollCustomersToRepairPlan(int totalCustomer) {
+
+        Random r = new Random();
+        String[] randomCustomerIdList = new String[totalCustomer]; 
+        
+
+        String[] applianceIDsWithRepairPlans = {"A1", "A2", "A3", "A5"};
+
+
+        for(int i=0; i< totalCustomer ;i++)
+        {
+        	randomCustomerIdList[i] = "M"+(r.nextInt(9)+1) ;
+            library.enrollRepairPlan(randomCustomerIdList[i], applianceIDsWithRepairPlans[i]);
+
+        }
+    }
 	
 	
 	

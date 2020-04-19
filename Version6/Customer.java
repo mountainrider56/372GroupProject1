@@ -223,6 +223,17 @@ public class Customer implements Serializable {
 	public void addToAccountBalance(double amount) {
 		accountBalance+= amount;
 	}
+	
+	public boolean checkEnrollInServicePlan() {
+		enrolledInRepairPlanStatus = appliancesOnRepairPlanList.isEmpty();
+		 return enrolledInRepairPlanStatus; 
+	}
+	
+	public void setEnrolledInRepairPlanStatus(boolean status) {
+		enrolledInRepairPlanStatus = status; 
+	}
+	
+
 
 
 	/**
@@ -252,9 +263,19 @@ public class Customer implements Serializable {
 		}
 		string += "]\n";
 		string += "Account Balance : " + accountBalance;
-		string += "      Enrolled in a service plan Status : " + accountBalance;
+		string += "\n";
+		string += "Enrolled in a service plan Status : " + enrolledInRepairPlanStatus;
+		string += "\n";	
+		// Loop through all enrollment plans a customer has.
+		string += "Current Repair Plans : ";
+		for (Iterator iterator = appliancesOnRepairPlanList.iterator(); iterator.hasNext();) {
+			RepairPlan repairPlan = (RepairPlan) iterator.next();
+			string += " " + repairPlan.getAppliance();
+			string += " , ";
+		}
 		string += "\n";
 		string += "\n";
+
 		return string;
 	}
 

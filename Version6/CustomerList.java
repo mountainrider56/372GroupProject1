@@ -83,6 +83,8 @@ public class CustomerList implements Serializable {
         return true;
     }
 
+ 
+
     /**
      * String form of the collection
      * 

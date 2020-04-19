@@ -367,6 +367,7 @@ public class UserInterface {
 	 * 
 	 */
 	public void chargeRepairPlans() {
+		System.out.println("Repair Plans charged"); 
 		library.chargeRepairPlans();
 	}
 	
@@ -476,7 +477,7 @@ public class UserInterface {
 				list_Customers();
 				break;
 			case LIST_BACKORDERS:
-				
+				list_BackOrders();
 				break;
 			case SAVE:
 				save();
@@ -535,6 +536,12 @@ public class UserInterface {
 			System.out.println("No vaild choice picked");
 		}
 		
+	}
+	
+	private void list_BackOrders() {
+		// TODO Auto-generated method stub
+		System.out.println("List all backorders\n-----------\n");
+		// System.out.println(library.getBackOrderList().toString()); 
 	}
 
 	private void list_Repair_Plans() {

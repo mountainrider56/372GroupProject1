@@ -8,6 +8,7 @@ public class RepairPlan {
 
 		this.customer = customer;
 		this.appliance = appliance;
+		customer.setEnrolledInRepairPlanStatus(true); 
 //		this.balance = 0 ; 
 	}
 
@@ -38,7 +39,7 @@ public class RepairPlan {
 	public String toString() {
 		return "Customer Name :" + customer.getName() +  ", phone : " + customer.getPhone() + ", Id : " + customer.getId() + "\n"
 				+ ", Account Balance : " + customer.getAccountBalance() 
-				+ "-----" + " Appliance Brand : " + appliance.getBrandName() + ", Model :" + appliance.getModelName() + "\n";
+				+ "-----" + " Appliance Brand : " + appliance.getBrandName() + ", Model :" + appliance.getModelName() + "\n" + "\n";
 	}
 	
 }

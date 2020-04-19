@@ -350,46 +350,6 @@ public class Library implements Serializable {
 		return customer.removeBackOrder(applianceId) && appliance.removeBackOrder(customerId) ? OPERATION_COMPLETED : NO_BACKORDER_FOUND;
 	}
 
-//	/*
-//	 * Removes all out-of-date backOrders
-//	 */
-//	private void removeInvalidBackOrders() {
-//		for (Iterator catalogIterator = catalog.getAppliances(); catalogIterator.hasNext();) {
-//			for (Iterator iterator = ((Appliance) catalogIterator.next()).getBackOrders(); iterator.hasNext();) {
-//				BackOrder backOrder = (BackOrder) iterator.next();
-//				if (!backOrder.isValid()) {
-//					backOrder.getAppliance().removeBackOrder(backOrder.getCustomer().getId());
-//					backOrder.getCustomer().removeBackOrder(backOrder.getAppliance().getId());
-//				}
-//			}
-//		}
-//	}
-
-	/**
-	 * Organizes the issuing of a appliance
-	 * 
-	 * @param customerId customer id
-	 * @param applianceId   appliance id
-	 * @return the appliance issued
-	 */
-//	public Appliance issueAppliance(String customerId, String applianceId) {
-//		Appliance appliance = catalog.search(applianceId);
-//		if (appliance == null) {
-//			return (null);
-//		}
-//		if (appliance.getIssuer() != null) {
-//			return (null);
-//		}
-//		Customer customer = customerList.search(customerId);
-//		if (customer == null) {
-//			return (null);
-//		}
-//		if (!(appliance.issue(customer) && customer.issue(appliance))) {
-//			return null;
-//		}
-//		return (appliance);
-//	}
-//	
 	/**
 	 * Organizes the issuing of a appliance
 	 * 
@@ -463,6 +423,18 @@ public class Library implements Serializable {
 	
 	public RepairPlanList getRepairPlanList() {
 		// TODO Auto-generated method stub
+		return repairPlanList;
+	}
+	
+	
+	public void getBackOrderList() {
+		// TODO Auto-generated method stub
+		for (Iterator iterator = customerList.iterator(); iterator.hasNext();) {
+			RepairPlan repairPlan = (RepairPlan) iterator.next();
+			string += " " + repairPlan.getAppliance();
+			string += " , ";
+		}
+		
 		return repairPlanList;
 	}
 
