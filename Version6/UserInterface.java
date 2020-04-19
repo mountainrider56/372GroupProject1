@@ -541,7 +541,7 @@ public class UserInterface {
 	private void list_BackOrders() {
 		// TODO Auto-generated method stub
 		System.out.println("List all backorders\n-----------\n");
-		// System.out.println(library.getBackOrderList().toString()); 
+		library.getBackOrderList(); 
 	}
 
 	private void list_Repair_Plans() {

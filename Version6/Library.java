@@ -429,13 +429,16 @@ public class Library implements Serializable {
 	
 	public void getBackOrderList() {
 		// TODO Auto-generated method stub
-		for (Iterator iterator = customerList.iterator(); iterator.hasNext();) {
-			RepairPlan repairPlan = (RepairPlan) iterator.next();
-			string += " " + repairPlan.getAppliance();
-			string += " , ";
+		for (Iterator iterator =  catalog.getAppliances(); iterator.hasNext();) {
+			
+			Appliance appliance = (Appliance) iterator.next();
+			
+			if (appliance.getSizeOfBackOrders() > 0) {
+				System.out.println("Backorders -- Brand : " + appliance.getBrandName() + " , model : " + appliance.getModelName()
+								+ " , quantity of backOrder : " + appliance.getSizeOfBackOrders() + "\n" + "\n"); 
+			
+			}
 		}
-		
-		return repairPlanList;
 	}
 
 	/**

@@ -267,13 +267,13 @@ public class Customer implements Serializable {
 		string += "Enrolled in a service plan Status : " + enrolledInRepairPlanStatus;
 		string += "\n";	
 		// Loop through all enrollment plans a customer has.
-		string += "Current Repair Plans : ";
-		for (Iterator iterator = appliancesOnRepairPlanList.iterator(); iterator.hasNext();) {
-			RepairPlan repairPlan = (RepairPlan) iterator.next();
-			string += " " + repairPlan.getAppliance();
-			string += " , ";
-		}
-		string += "\n";
+//		string += "Current Repair Plans : { ";
+//		for (Iterator iterator = appliancesOnRepairPlanList.iterator(); iterator.hasNext();) {
+//			RepairPlan repairPlan = (RepairPlan) iterator.next();
+//			string += " " + repairPlan.getAppliance();
+//			string += " , ";
+//		}
+//		string += " } \n";
 		string += "\n";
 
 		return string;

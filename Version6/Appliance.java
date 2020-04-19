@@ -157,6 +157,12 @@ public class Appliance implements Serializable {
 	public Iterator getBackOrders() {
 		return backOrders.iterator();
 	}
+	
+	// getSizeOfBackOrders
+	
+	public int getSizeOfBackOrders() {
+		return backOrders.size();
+	}
 
 	/**
 	 * Getter for modelName
